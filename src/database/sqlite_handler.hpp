@@ -2,6 +2,8 @@
 
 class SQLiteHandler : public IDatabaseHandler {
  public:
+  SQLiteHandler(const std::string& path);
+
   /// @brief: Stores a new deck
   /// @param deck: Deck to store
   /// @return true if operation is successful, false otherwise

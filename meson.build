@@ -5,7 +5,9 @@ project('memcard',
         )
 
 src_files = []
-inc_dir = include_directories(['.', 'src'])
+inc_dir = include_directories(['.',
+                                'src',
+                                './external/vcpkg/installed/x64-linux/include/'])
 
 deps = []
 deps += dependency('wxwidgets', required: true)

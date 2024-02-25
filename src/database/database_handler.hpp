@@ -8,6 +8,7 @@
 #include "types/deck.hpp"
 
 class IDatabaseHandler {
+ public:
   /// @brief: Stores a new deck
   /// @param deck: Deck to store
   /// @return true if operation is successful, false otherwise
@@ -28,6 +29,8 @@ class IDatabaseHandler {
   /// @param deck: Deck to get the cards from
   /// @return true if operation is successful, false otherwise
   virtual std::vector<Card> GetAllCards(const Deck& deck) const = 0;
+
+  virtual ~IDatabaseHandler() = default;
 };
 
 #endif
