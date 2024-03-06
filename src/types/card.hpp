@@ -7,11 +7,11 @@
 
 class Card {
  public:
-  const std::string name_;
-  const std::string front_;
-  const std::string back_;
-  const int id_;
-  const Deck& deck_;
+  std::string name;
+  std::string front;
+  std::string back;
+  int id;
+  int deck_id;
 };
 
 #endif

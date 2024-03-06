@@ -11,6 +11,7 @@ inc_dir = include_directories(['.',
 
 deps = []
 deps += dependency('wxwidgets', required: true)
+deps += dependency('sqlite3', required : true)
 
 subdir('src')
 

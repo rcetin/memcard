@@ -4,6 +4,9 @@
 
 #include <iostream>
 
+#include "types/card.hpp"
+#include "types/deck.hpp"
+
 using namespace sqlite_orm;
 
 struct User {
@@ -20,33 +23,36 @@ struct UserType {
   std::string name;
 };
 
-SQLiteHandler::SQLiteHandler(const std::string& path) {
-  auto storage = make_storage(
-      "db.sqlite",
-      make_table("users",
-                 make_column("id", &User::id, primary_key().autoincrement()),
-                 make_column("first_name", &User::firstName),
-                 make_column("last_name", &User::lastName),
-                 make_column("birth_date", &User::birthDate),
-                 make_column("image_url", &User::imageUrl),
-                 make_column("type_id", &User::typeId)),
-      make_table(
-          "user_types",
-          make_column("id", &UserType::id, primary_key().autoincrement()),
-          make_column("name", &UserType::name,
-                      default_value("name_placeholder"))));
-
-  storage.sync_schema();
+SQLiteHandler::SQLiteHandler(const std::string& path) : db_path_{path} {
+  auto db = InitStorage(path);
+  db.sync_schema();
 }
 
-bool SQLiteHandler::StoreDeck(const Deck& deck) const { return false; }
+void SQLiteHandler::StoreDeck(Deck& deck) const {
+  auto db = InitStorage(db_path_);
 
-bool SQLiteHandler::DeleteDeck(const Deck& deck) const { return false; }
-
-bool SQLiteHandler::StoreCard(const Deck& deck, const Card& card) const {
-  return false;
+  deck.id = db.insert(deck);
 }
 
-std::vector<Card> SQLiteHandler::GetAllCards(const Deck& deck) const {
-  return std::vector<Card>();
+void SQLiteHandler::DeleteDeck(const Deck& deck) const {
+  auto db = InitStorage(db_path_);
+
+  db.remove<Deck>(deck.id);
+}
+
+void SQLiteHandler::StoreCard(const Deck& deck, Card& card) const {
+  auto db = InitStorage(db_path_);
+
+  card.id = db.insert(card);
+}
+
+std::vector<Card> SQLiteHandler::GetAllCardsByDeck(const Deck& deck) const {
+  auto db = InitStorage(db_path_);
+  std::vector<Card> cards{};
+
+  for (auto card : db.iterate<Card>(where(c(&Card::deck_id) == deck.id))) {
+    cards.emplace_back(card);
+  }
+
+  return cards;
 }

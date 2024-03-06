@@ -5,8 +5,8 @@
 
 class Deck {
  public:
-  const std::string name_;
-  const int id_;
+  std::string name;
+  int id;
 };
 
 #endif
