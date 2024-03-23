@@ -1,6 +1,6 @@
 #include <wx/wx.h>
 
-#include "UI/main_screen_impl.hpp"
+#include "gui_manager.hpp"
 
 class MyApp : public wxApp {
  public:
@@ -9,9 +9,11 @@ class MyApp : public wxApp {
 
 wxIMPLEMENT_APP(MyApp);
 
+std::unique_ptr<GUIManager> gui;
+
 bool MyApp::OnInit() {
-  MainScreenImpl* main_screen = new MainScreenImpl();
-  main_screen->Show();
+  gui = CreateGUIManager();
+  gui->StartApplication();
 
   return true;
 }

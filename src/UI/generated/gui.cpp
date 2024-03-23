@@ -86,8 +86,17 @@ CreateDeckScreen::CreateDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 
 	bSizer6->Add( bSizer3, 0, wxEXPAND, 5 );
 
+	wxBoxSizer* bSizer31;
+	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
+
 	deckCreateBtn = new wxButton( this, wxID_ANY, wxT("Create"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer6->Add( deckCreateBtn, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	bSizer31->Add( deckCreateBtn, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+
+	createDeckCancelBtn = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( createDeckCancelBtn, 0, wxALL, 5 );
+
+
+	bSizer6->Add( bSizer31, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
 	this->SetSizer( bSizer6 );
@@ -97,12 +106,68 @@ CreateDeckScreen::CreateDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 
 	// Connect Events
 	deckCreateBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateDeckScreen::OnDeckCreateClicked ), NULL, this );
+	createDeckCancelBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateDeckScreen::OnCreateDeckCancelClicked ), NULL, this );
 }
 
 CreateDeckScreen::~CreateDeckScreen()
 {
 	// Disconnect Events
 	deckCreateBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateDeckScreen::OnDeckCreateClicked ), NULL, this );
+	createDeckCancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateDeckScreen::OnCreateDeckCancelClicked ), NULL, this );
+
+}
+
+SelectDeckScreen::SelectDeckScreen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer6;
+	bSizer6 = new wxBoxSizer( wxVERTICAL );
+
+	select_deck_title = new wxStaticText( this, wxID_ANY, wxT("Decks"), wxPoint( 0,0 ), wxDefaultSize, wxALIGN_CENTER_HORIZONTAL );
+	select_deck_title->Wrap( -1 );
+	select_deck_title->SetFont( wxFont( 15, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
+	select_deck_title->SetMinSize( wxSize( -1,25 ) );
+
+	bSizer6->Add( select_deck_title, 0, wxALL|wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer3;
+	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
+
+	selectDeckListCtrlr = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxBORDER_THEME );
+	bSizer3->Add( selectDeckListCtrlr, 0, wxALL, 5 );
+
+
+	bSizer6->Add( bSizer3, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+	wxBoxSizer* bSizer31;
+	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
+
+	SelectDeckSelectBtn = new wxButton( this, wxID_ANY, wxT("Select"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( SelectDeckSelectBtn, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+
+	SelectDeckCancelBtn = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( SelectDeckCancelBtn, 0, wxALL, 5 );
+
+
+	bSizer6->Add( bSizer31, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+
+	this->SetSizer( bSizer6 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	SelectDeckSelectBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckClicked ), NULL, this );
+	SelectDeckCancelBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckCancelClicked ), NULL, this );
+}
+
+SelectDeckScreen::~SelectDeckScreen()
+{
+	// Disconnect Events
+	SelectDeckSelectBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckClicked ), NULL, this );
+	SelectDeckCancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckCancelClicked ), NULL, this );
 
 }
 

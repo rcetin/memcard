@@ -1,4 +1,8 @@
-#include <sqlite_orm/sqlite_orm.h>
+#pragma once
+
+#include <SQLiteCpp/SQLiteCpp.h>
+
+#include <iostream>
 
 #include "database_handler.hpp"
 
@@ -6,39 +10,46 @@ class SQLiteHandler : public IDatabaseHandler {
  public:
   SQLiteHandler(const std::string& path);
 
+  SQLiteHandler(const SQLiteHandler&) = delete;
+  SQLiteHandler& operator=(const SQLiteHandler&) = delete;
+
+  // SQLiteHandler(SQLiteHandler&& other) = default;
+  // SQLiteHandler& operator=(SQLiteHandler&& other) = default;
+
+  SQLiteHandler(SQLiteHandler&& other) : db_{std::move(other.db_)} {
+    std::cout << "move ctor<<<<<\n";
+  }
+
+  SQLiteHandler& operator=(SQLiteHandler&& other) {
+    db_ = std::move(other.db_);
+
+    std::cout << "move assign\n";
+
+    return *this;
+  }
+
   /// @brief: Stores a new deck
   /// @param deck: Deck to store. Stored deck id will be written on Deck
-  void StoreDeck(Deck& deck) const override;
+  void StoreDeck(Deck& deck) override;
 
   /// @brief: Deletes a deck
   /// @param deck: Deck to delete
-  void DeleteDeck(const Deck& deck) const override;
+  void DeleteDeck(const Deck& deck) override;
 
   /// @brief: Stores a deck
   /// @param deck: Deck to store the card
   /// @param card: Card to store. Stored card id will be written on Deck
-  void StoreCard(const Deck& deck, Card& card) const override;
+  void StoreCard(const Deck& deck, Card& card) override;
 
   /// @brief: Gets all cards from a deck
   /// @param deck: Deck to get the cards from
   /// @return vector of cards of the deck
   std::vector<Card> GetAllCardsByDeck(const Deck& deck) const override;
 
- private:
-  static auto InitStorage(const std::string& path) {
-    using namespace sqlite_orm;
-    return make_storage(
-        path,
-        make_table("decks",
-                   make_column("id", &Deck::id, primary_key().autoincrement()),
-                   make_column("name", &Deck::name)),
-        make_table("cards",
-                   make_column("id", &Card::id, primary_key().autoincrement()),
-                   make_column("name", &Card::name),
-                   make_column("front", &Card::front),
-                   make_column("back", &Card::back),
-                   make_column("deck_id", &Card::deck_id)));
-  }
+  std::vector<Deck> GetAllDecks(void) const override;
 
-  std::string db_path_;
+  virtual ~SQLiteHandler() = default;
+
+ private:
+  SQLite::Database db_;  ///< Database connection
 };

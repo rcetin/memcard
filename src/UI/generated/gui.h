@@ -22,6 +22,7 @@
 #include <wx/sizer.h>
 #include <wx/frame.h>
 #include <wx/textctrl.h>
+#include <wx/listctrl.h>
 #include <wx/statline.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -66,9 +67,11 @@ class CreateDeckScreen : public wxFrame
 		wxStaticText* deckNameText;
 		wxTextCtrl* deckNameTextBox;
 		wxButton* deckCreateBtn;
+		wxButton* createDeckCancelBtn;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnDeckCreateClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCreateDeckCancelClicked( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
@@ -76,6 +79,32 @@ class CreateDeckScreen : public wxFrame
 		CreateDeckScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~CreateDeckScreen();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class SelectDeckScreen
+///////////////////////////////////////////////////////////////////////////////
+class SelectDeckScreen : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* select_deck_title;
+		wxListCtrl* selectDeckListCtrlr;
+		wxButton* SelectDeckSelectBtn;
+		wxButton* SelectDeckCancelBtn;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnSelectDeckClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectDeckCancelClicked( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		SelectDeckScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~SelectDeckScreen();
 
 };
 

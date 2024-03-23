@@ -26,6 +26,7 @@ TEST_F(DatabaseTestFixture, Insert_deck_id_increase) {
   Deck d{"myDeck", -1};
 
   ASSERT_NO_THROW(sut_.StoreDeck(d));
+  ASSERT_EQ(d.id, 1);
   ASSERT_NO_THROW(sut_.StoreDeck(d));
   ASSERT_EQ(d.id, 2);
 }
@@ -61,8 +62,32 @@ TEST_F(DatabaseTestFixture, GetStoredCard) {
 
   ASSERT_NO_THROW(sut_.StoreCard(d, c));
   ASSERT_EQ(c.id, 1);
+  ASSERT_NO_THROW(sut_.StoreCard(d, c));
+  ASSERT_EQ(c.id, 2);
 
   decltype(sut_.GetAllCardsByDeck(d)) cards;
   ASSERT_NO_THROW(cards = sut_.GetAllCardsByDeck(d));
+  ASSERT_EQ(cards.size(), 2);
+}
+
+TEST_F(DatabaseTestFixture, testMove) {
+  std::unique_ptr<SQLiteHandler> db1 =
+      std::make_unique<SQLiteHandler>("test2.db");
+
+  Deck d{"myDeck", -1};
+
+  ASSERT_NO_THROW(db1->StoreDeck(d));
+  ASSERT_EQ(d.id, 1);
+
+  auto c = Card{"card1", "front1", "back1", -1, d.id};
+
+  ASSERT_NO_THROW(db1->StoreCard(d, c));
+  ASSERT_EQ(c.id, 1);
+
+  auto db2 = std::move(db1);
+  decltype(db2->GetAllCardsByDeck(d)) cards;
+  ASSERT_NO_THROW(cards = db2->GetAllCardsByDeck(d));
   ASSERT_EQ(cards.size(), 1);
+
+  std::system("rm -f test2.db");
 }
