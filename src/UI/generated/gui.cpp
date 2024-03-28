@@ -20,7 +20,7 @@ MainScreen::MainScreen( wxWindow* parent, wxWindowID id, const wxString& title, 
 	welcome_title->Wrap( -1 );
 	welcome_title->SetFont( wxFont( 25, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Monospace") ) );
 
-	bSizer1->Add( welcome_title, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 5 );
+	bSizer1->Add( welcome_title, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 50 );
 
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
@@ -35,7 +35,7 @@ MainScreen::MainScreen( wxWindow* parent, wxWindowID id, const wxString& title, 
 	bSizer2->Add( quit_btn, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
-	bSizer1->Add( bSizer2, 0, wxALIGN_CENTER|wxALL, 5 );
+	bSizer1->Add( bSizer2, 6, wxALIGN_CENTER|wxALL, 0 );
 
 
 	this->SetSizer( bSizer1 );
@@ -69,20 +69,23 @@ CreateDeckScreen::CreateDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 	create_dec_title->Wrap( -1 );
 	create_dec_title->SetFont( wxFont( 25, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Monospace") ) );
 
-	bSizer6->Add( create_dec_title, 0, wxALL|wxEXPAND, 5 );
+	bSizer6->Add( create_dec_title, 0, wxALL|wxEXPAND, 50 );
+
+	wxBoxSizer* bSizer311;
+	bSizer311 = new wxBoxSizer( wxVERTICAL );
 
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
 
 	deckNameText = new wxStaticText( this, wxID_ANY, wxT("Deck Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	deckNameText->Wrap( -1 );
-	bSizer3->Add( deckNameText, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer3->Add( deckNameText, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	deckNameTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer3->Add( deckNameTextBox, 1, wxALL, 5 );
+	bSizer3->Add( deckNameTextBox, 3, wxALL, 5 );
 
 
-	bSizer6->Add( bSizer3, 0, wxEXPAND, 5 );
+	bSizer311->Add( bSizer3, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	wxBoxSizer* bSizer31;
 	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
@@ -94,7 +97,10 @@ CreateDeckScreen::CreateDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 	bSizer31->Add( createDeckCancelBtn, 0, wxALL, 5 );
 
 
-	bSizer6->Add( bSizer31, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+	bSizer311->Add( bSizer31, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+
+	bSizer6->Add( bSizer311, 0, wxALIGN_CENTER_HORIZONTAL, 0 );
 
 
 	this->SetSizer( bSizer6 );
@@ -126,7 +132,7 @@ SelectDeckScreen::SelectDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 	select_deck_title->Wrap( -1 );
 	select_deck_title->SetFont( wxFont( 25, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Monospace") ) );
 
-	bSizer6->Add( select_deck_title, 0, wxALL|wxEXPAND, 5 );
+	bSizer6->Add( select_deck_title, 0, wxALL|wxEXPAND, 50 );
 
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
@@ -183,7 +189,7 @@ AddEditCardScreen::AddEditCardScreen( wxWindow* parent, wxWindowID id, const wxS
 	add_edit_card_title->Wrap( -1 );
 	add_edit_card_title->SetFont( wxFont( 25, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
 
-	bSizer6->Add( add_edit_card_title, 0, wxALL|wxEXPAND, 5 );
+	bSizer6->Add( add_edit_card_title, 0, wxALL|wxEXPAND, 50 );
 
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
@@ -243,7 +249,7 @@ ShowCardScreen::ShowCardScreen( wxWindow* parent, wxWindowID id, const wxString&
 	show_card_title->Wrap( -1 );
 	show_card_title->SetFont( wxFont( 25, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
 
-	bSizer6->Add( show_card_title, 0, wxALL|wxEXPAND, 5 );
+	bSizer6->Add( show_card_title, 0, wxALL|wxEXPAND, 50 );
 
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
@@ -303,7 +309,7 @@ PracticeScreen::PracticeScreen( wxWindow* parent, wxWindowID id, const wxString&
 	practice_title->Wrap( -1 );
 	practice_title->SetFont( wxFont( 25, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Monospace") ) );
 
-	bSizer6->Add( practice_title, 0, wxALL|wxEXPAND, 5 );
+	bSizer6->Add( practice_title, 0, wxALL|wxEXPAND, 50 );
 
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
@@ -404,7 +410,7 @@ AddCardBoardingScreen::AddCardBoardingScreen( wxWindow* parent, wxWindowID id, c
 	addCardOnboardingText = new wxTextCtrl( this, wxID_ANY, wxT("There are no cards in deck, Please add card to start practice :)"), wxDefaultPosition, wxDefaultSize, wxTE_CENTER|wxTE_MULTILINE|wxTE_READONLY|wxBORDER_NONE );
 	addCardOnboardingText->SetFont( wxFont( 25, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
 
-	bSizer3611->Add( addCardOnboardingText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 5 );
+	bSizer3611->Add( addCardOnboardingText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 50 );
 
 
 	bSizer6->Add( bSizer3611, 1, wxEXPAND, 5 );
