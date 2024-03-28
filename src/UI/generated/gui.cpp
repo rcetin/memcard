@@ -131,11 +131,13 @@ SelectDeckScreen::SelectDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
 
-	selectDeckListCtrlr = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER_THEME );
-	bSizer3->Add( selectDeckListCtrlr, 0, wxALL, 5 );
+	selectDeckListCtrlr = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
+	selectDeckListCtrlr->SetFont( wxFont( 15, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Noto Serif Georgian") ) );
+
+	bSizer3->Add( selectDeckListCtrlr, 0, 0, 0 );
 
 
-	bSizer6->Add( bSizer3, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+	bSizer6->Add( bSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1 );
 
 	wxBoxSizer* bSizer31;
 	bSizer31 = new wxBoxSizer( wxHORIZONTAL );

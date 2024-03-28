@@ -20,6 +20,8 @@ class SelectDeckScreenImpl : public SelectDeckScreen {
   void OnSelectDeckCancelClicked(wxCommandEvent& event) override;
   void OnItemSelected(wxListEvent& event) override;
 
+  void ResizeList(void);
+
   void ClearDecksList(void);
 
   GetAllDecksCb get_all_decks_cb_;

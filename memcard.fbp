@@ -857,8 +857,8 @@
           </object>
         </object>
         <object class="sizeritem" expanded="false">
-          <property name="border">5</property>
-          <property name="flag">wxALIGN_CENTER_HORIZONTAL</property>
+          <property name="border">1</property>
+          <property name="flag">wxALIGN_CENTER_HORIZONTAL|wxALL</property>
           <property name="proportion">0</property>
           <object class="wxBoxSizer" expanded="false">
             <property name="minimum_size"></property>
@@ -866,8 +866,8 @@
             <property name="orient">wxHORIZONTAL</property>
             <property name="permission">none</property>
             <object class="sizeritem" expanded="false">
-              <property name="border">5</property>
-              <property name="flag">wxALL</property>
+              <property name="border">0</property>
+              <property name="flag"></property>
               <property name="proportion">0</property>
               <object class="wxListCtrl" expanded="false">
                 <property name="BottomDockable">1</property>
@@ -894,7 +894,7 @@
                 <property name="enabled">1</property>
                 <property name="fg"></property>
                 <property name="floatable">1</property>
-                <property name="font"></property>
+                <property name="font">Noto Serif Georgian,90,90,15,72,0</property>
                 <property name="gripper">0</property>
                 <property name="hidden">0</property>
                 <property name="id">wxID_ANY</property>
@@ -903,7 +903,7 @@
                 <property name="maximum_size"></property>
                 <property name="min_size"></property>
                 <property name="minimize_button">0</property>
-                <property name="minimum_size"></property>
+                <property name="minimum_size">-1,-1</property>
                 <property name="moveable">1</property>
                 <property name="name">selectDeckListCtrlr</property>
                 <property name="pane_border">1</property>
@@ -925,7 +925,7 @@
                 <property name="validator_variable"></property>
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
-                <property name="window_style">wxBORDER_THEME</property>
+                <property name="window_style"></property>
                 <event name="OnListItemSelected">OnItemSelected</event>
               </object>
             </object>

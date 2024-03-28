@@ -13,14 +13,20 @@ SelectDeckScreenImpl::SelectDeckScreenImpl()
       get_all_decks_cb_{nullptr},
       start_practice_cb_{nullptr},
       selected_deck_idx{-1} {
-  selectDeckListCtrlr->InsertColumn(0, _("Deck Id"));
-  selectDeckListCtrlr->InsertColumn(1, _("Deck Name"));
+  selectDeckListCtrlr->InsertColumn(0, _("Id"));
+  selectDeckListCtrlr->InsertColumn(1, _("Name"));
+  ResizeList();
 }
 
 void SelectDeckScreenImpl::SetCallbacks(GetAllDecksCb get_all_decks_cb,
                                         StartPracticeCb start_practice_cb) {
   get_all_decks_cb_ = get_all_decks_cb;
   start_practice_cb_ = start_practice_cb;
+}
+
+void SelectDeckScreenImpl::ResizeList(void) {
+  selectDeckListCtrlr->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+  selectDeckListCtrlr->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
 }
 
 void SelectDeckScreenImpl::Show() {
@@ -32,6 +38,7 @@ void SelectDeckScreenImpl::Show() {
     // selectDeckListCtrlr->AppendColumn(deck.name);
     long index = selectDeckListCtrlr->InsertItem(0, std::to_string(deck.id));
     selectDeckListCtrlr->SetItem(index, 1, deck.name);
+    ResizeList();
   }
 
   SelectDeckScreen::Show(true);
