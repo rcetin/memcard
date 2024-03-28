@@ -3,9 +3,7 @@
 #include <functional>
 #include <utility>
 
-#include "UI/create_deck_screen_impl.hpp"
-#include "UI/edit_card_screen_impl.hpp"
-#include "UI/main_screen_impl.hpp"
+#include "UI/screens/main_screen_impl.hpp"
 #include "database/sqlite_handler.hpp"
 
 GUIManager::GUIManager(MainScreenImpl* main_screen,
@@ -29,12 +27,23 @@ void GUIManager::CreateNewDeck(Deck& deck) {
   database_handler_->StoreDeck(deck);
 }
 
-void GUIManager::CreateNewCard(const Deck&, Card&) const {
-  ///
+void GUIManager::CreateNewCard(int deck_id, Card& card) const {
+  if (!database_handler_) {
+    std::cout << "database handler is null!\n";
+    return;
+  }
+
+  database_handler_->StoreCard(deck_id, card);
 }
 
-std::vector<Card> GUIManager::GetAllCards(const Deck&) const {
-  return std::vector<Card>();
+std::vector<Card> GUIManager::GetAllCards(int deck_id) const {
+  if (!database_handler_) {
+    std::cout << "database handler is null!\n";
+    std::vector<Card>();
+  }
+
+  auto cards = database_handler_->GetAllCardsByDeck(deck_id);
+  return cards;
 }
 
 std::vector<Deck> GUIManager::GetAllDecks(void) const {

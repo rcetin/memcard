@@ -30,31 +30,31 @@ void SQLiteHandler::StoreDeck(Deck& deck) {
   std::cout << "inserted id=" << deck.id << "\n";
 }
 
-void SQLiteHandler::DeleteDeck(const Deck& deck) {
+void SQLiteHandler::DeleteDeck(int deck_id) {
   SQLite::Statement query{db_, "DELETE FROM decks WHERE id = ?"};
-  query.bind(1, deck.id);
+  query.bind(1, deck_id);
 
   query.exec();
 }
 
-void SQLiteHandler::StoreCard(const Deck& deck, Card& card) {
+void SQLiteHandler::StoreCard(int deck_id, Card& card) {
   SQLite::Statement query{db_, "INSERT INTO cards VALUES (NULL, ?, ?, ?, ?)"};
   query.bind(1, card.name);
   query.bind(2, card.front);
   query.bind(3, card.back);
-  query.bind(4, deck.id);
+  query.bind(4, deck_id);
 
   query.exec();
 
   card.id = db_.getLastInsertRowid();
 }
 
-std::vector<Card> SQLiteHandler::GetAllCardsByDeck(const Deck& deck) const {
+std::vector<Card> SQLiteHandler::GetAllCardsByDeck(int deck_id) const {
   std::vector<Card> cards{};
 
   SQLite::Statement query(db_, "SELECT * FROM cards WHERE deck_id = ?");
 
-  query.bind(1, deck.id);
+  query.bind(1, deck_id);
 
   while (query.executeStep()) {
     // Demonstrate how to get some typed column value
@@ -64,7 +64,7 @@ std::vector<Card> SQLiteHandler::GetAllCardsByDeck(const Deck& deck) const {
     const char* back = query.getColumn(3);
 
     cards.push_back(Card{std::string{name}, std::string{front},
-                         std::string{back}, id, deck.id});
+                         std::string{back}, id, deck_id});
   }
 
   return cards;

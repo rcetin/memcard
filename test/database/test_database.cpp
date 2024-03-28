@@ -37,7 +37,7 @@ TEST_F(DatabaseTestFixture, Delete_deck) {
   ASSERT_NO_THROW(sut_.StoreDeck(d));
   ASSERT_EQ(d.id, 1);
 
-  ASSERT_NO_THROW(sut_.DeleteDeck(d));
+  ASSERT_NO_THROW(sut_.DeleteDeck(d.id));
 }
 
 TEST_F(DatabaseTestFixture, StoreCard) {
@@ -48,7 +48,7 @@ TEST_F(DatabaseTestFixture, StoreCard) {
 
   auto c = Card{"card1", "front1", "back1", -1, d.id};
 
-  ASSERT_NO_THROW(sut_.StoreCard(d, c));
+  ASSERT_NO_THROW(sut_.StoreCard(d.id, c));
   ASSERT_EQ(c.id, 1);
 }
 
@@ -60,13 +60,13 @@ TEST_F(DatabaseTestFixture, GetStoredCard) {
 
   auto c = Card{"card1", "front1", "back1", -1, d.id};
 
-  ASSERT_NO_THROW(sut_.StoreCard(d, c));
+  ASSERT_NO_THROW(sut_.StoreCard(d.id, c));
   ASSERT_EQ(c.id, 1);
-  ASSERT_NO_THROW(sut_.StoreCard(d, c));
+  ASSERT_NO_THROW(sut_.StoreCard(d.id, c));
   ASSERT_EQ(c.id, 2);
 
-  decltype(sut_.GetAllCardsByDeck(d)) cards;
-  ASSERT_NO_THROW(cards = sut_.GetAllCardsByDeck(d));
+  decltype(sut_.GetAllCardsByDeck(d.id)) cards;
+  ASSERT_NO_THROW(cards = sut_.GetAllCardsByDeck(d.id));
   ASSERT_EQ(cards.size(), 2);
 }
 
@@ -81,12 +81,12 @@ TEST_F(DatabaseTestFixture, testMove) {
 
   auto c = Card{"card1", "front1", "back1", -1, d.id};
 
-  ASSERT_NO_THROW(db1->StoreCard(d, c));
+  ASSERT_NO_THROW(db1->StoreCard(d.id, c));
   ASSERT_EQ(c.id, 1);
 
   auto db2 = std::move(db1);
-  decltype(db2->GetAllCardsByDeck(d)) cards;
-  ASSERT_NO_THROW(cards = db2->GetAllCardsByDeck(d));
+  decltype(db2->GetAllCardsByDeck(d.id)) cards;
+  ASSERT_NO_THROW(cards = db2->GetAllCardsByDeck(d.id));
   ASSERT_EQ(cards.size(), 1);
 
   std::system("rm -f test2.db");

@@ -23,6 +23,7 @@ void CreateDeckScreenImpl::OnDeckCreateClicked(wxCommandEvent& event) {
   std::cout << "DECK NAME=" << text << std::endl;
   auto d = Deck{text.ToStdString(), -1};
   create_new_deck_cb_(d);
+  CreateDeckScreen::Show(false);
 }
 
 void CreateDeckScreenImpl::OnCreateDeckCancelClicked(wxCommandEvent& event) {

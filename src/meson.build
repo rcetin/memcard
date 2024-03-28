@@ -4,3 +4,4 @@ src_files += files('gui_manager.cpp')
 
 subdir('UI')
 subdir('database')
+subdir('generator')

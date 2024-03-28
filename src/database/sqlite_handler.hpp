@@ -34,17 +34,17 @@ class SQLiteHandler : public IDatabaseHandler {
 
   /// @brief: Deletes a deck
   /// @param deck: Deck to delete
-  void DeleteDeck(const Deck& deck) override;
+  void DeleteDeck(int deck_id) override;
 
   /// @brief: Stores a deck
   /// @param deck: Deck to store the card
   /// @param card: Card to store. Stored card id will be written on Deck
-  void StoreCard(const Deck& deck, Card& card) override;
+  void StoreCard(int deck_id, Card& card) override;
 
   /// @brief: Gets all cards from a deck
   /// @param deck: Deck to get the cards from
   /// @return vector of cards of the deck
-  std::vector<Card> GetAllCardsByDeck(const Deck& deck) const override;
+  std::vector<Card> GetAllCardsByDeck(int deck_id) const override;
 
   std::vector<Deck> GetAllDecks(void) const override;
 

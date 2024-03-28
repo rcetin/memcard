@@ -96,6 +96,7 @@ class SelectDeckScreen : public wxFrame
 		wxButton* SelectDeckCancelBtn;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void OnItemSelected( wxListEvent& event ) { event.Skip(); }
 		virtual void OnSelectDeckClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectDeckCancelClicked( wxCommandEvent& event ) { event.Skip(); }
 
@@ -109,30 +110,114 @@ class SelectDeckScreen : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class EditCardScreen
+/// Class AddEditCardScreen
 ///////////////////////////////////////////////////////////////////////////////
-class EditCardScreen : public wxFrame
+class AddEditCardScreen : public wxFrame
 {
 	private:
 
 	protected:
-		wxStaticText* edit_card_title;
+		wxStaticText* add_edit_card_title;
 		wxTextCtrl* cardFrontTextBox;
 		wxStaticLine* m_staticline1;
 		wxTextCtrl* cardBackTextBox;
-		wxButton* editCardSaveBtn;
-		wxButton* editCardCancelBtn;
+		wxButton* addEditCardSaveBtn;
+		wxButton* addEditCardCancelBtn;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void OnEditCardSaveClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEditCardCancelClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnAddEditCardSaveClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnAddEditCardCancelClicked( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		EditCardScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		AddEditCardScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
-		~EditCardScreen();
+		~AddEditCardScreen();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class ShowCardScreen
+///////////////////////////////////////////////////////////////////////////////
+class ShowCardScreen : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* show_card_title;
+		wxTextCtrl* cardFrontTextBox;
+		wxStaticLine* m_staticline1;
+		wxTextCtrl* cardBackTextBox;
+		wxButton* showCardNextBtn;
+		wxButton* showCardCancelBtn;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnShowCardNextClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowCardCancelClicked( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		ShowCardScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~ShowCardScreen();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class PracticeScreen
+///////////////////////////////////////////////////////////////////////////////
+class PracticeScreen : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* practice_title;
+		wxButton* addCardPracticeBtn;
+		wxTextCtrl* cardFrontTextBox;
+		wxButton* practiceNextBtn;
+		wxButton* practiceShowBtn;
+		wxButton* practiceCancelBtn;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnPracticeAddCardClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPracticeNextClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPracticeShowClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPracticeCancelClicked( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		PracticeScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~PracticeScreen();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class AddCardBoardingScreen
+///////////////////////////////////////////////////////////////////////////////
+class AddCardBoardingScreen : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* dummy;
+		wxTextCtrl* addCardOnboardingText;
+		wxButton* addCardAddBtn;
+		wxButton* addCardCancelBtn;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnAddCardAddClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnAddCardCancelClicked( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		AddCardBoardingScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~AddCardBoardingScreen();
 
 };
 

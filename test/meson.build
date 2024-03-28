@@ -7,3 +7,4 @@ common_inc = []
 common_inc += ['../../src/']
 
 subdir('database')
+subdir('generator')

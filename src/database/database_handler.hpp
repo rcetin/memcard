@@ -15,17 +15,17 @@ class IDatabaseHandler {
 
   /// @brief: Deletes a deck
   /// @param deck: Deck to delete
-  virtual void DeleteDeck(const Deck& deck) = 0;
+  virtual void DeleteDeck(int deck_id) = 0;
 
   /// @brief: Stores a deck
   /// @param deck: Deck to store the card
   /// @param card: Card to store. Stored card id will be written on Deck
-  virtual void StoreCard(const Deck& deck, Card& card) = 0;
+  virtual void StoreCard(int deck_id, Card& card) = 0;
 
   /// @brief: Gets all cards from a deck
   /// @param deck: Deck to get the cards from
   /// @return vector of cards of the deck
-  virtual std::vector<Card> GetAllCardsByDeck(const Deck& deck) const = 0;
+  virtual std::vector<Card> GetAllCardsByDeck(int deck_id) const = 0;
 
   virtual std::vector<Deck> GetAllDecks(void) const = 0;
 

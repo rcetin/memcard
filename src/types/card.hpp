@@ -5,8 +5,7 @@
 
 #include "deck.hpp"
 
-class Card {
- public:
+struct Card {
   std::string name;
   std::string front;
   std::string back;

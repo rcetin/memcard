@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "UI/main_screen_impl.hpp"
+#include "UI/screens/main_screen_impl.hpp"
 #include "database/database_handler.hpp"
 #include "database/sqlite_handler.hpp"
 #include "types/card.hpp"
@@ -26,8 +26,8 @@ class GUIManager {
 
  private:
   void CreateNewDeck(Deck&);
-  void CreateNewCard(const Deck&, Card&) const;
-  std::vector<Card> GetAllCards(const Deck&) const;
+  void CreateNewCard(int deck_id, Card&) const;
+  std::vector<Card> GetAllCards(int deck_id) const;
   std::vector<Deck> GetAllDecks(void) const;
 
   MainScreenImpl* main_screen_;
