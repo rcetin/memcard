@@ -8,7 +8,8 @@ PracticeScreenImpl::PracticeScreenImpl()
     : PracticeScreen(nullptr, wxID_ANY, "Show Card", wxPoint(0, 0),
                      wxDefaultSize, 0),
       get_all_cards_cb_{nullptr},
-      current_card_idx_{0} {}
+      current_card_idx_{0},
+      current_card_pos_{card_position::kFront} {}
 
 void PracticeScreenImpl::SetCallbacks(
     GetAllCardsCb get_all_cards_cb, NotifyAddCardCb notify_add_card_cb,
@@ -27,18 +28,24 @@ void PracticeScreenImpl::Show(int deck_id) {
   current_deck_id_ = deck_id;
 
   if (!cards_.empty()) {
-    ShowCard(cards_[current_card_idx_], card_position::kFront);
+    current_card_pos_ = card_position::kFront;
+    ShowCard(cards_[current_card_idx_], current_card_pos_);
     PracticeScreen::Show(true);
   }
 }
 
 void PracticeScreenImpl::ShowCard(const Card& card, card_position pos) {
-  cardFrontTextBox->ChangeValue((pos == card_position::kFront) ? card.front
-                                                               : card.back);
+  cardFrontTextBox->SetLabel((pos == card_position::kFront) ? card.front
+                                                            : card.back);
+  // const auto width = wxWindow::GetSize().GetWidth();
+  // cardFrontTextBox->Wrap(width);
 }
 
 void PracticeScreenImpl::OnPracticeShowClicked(wxCommandEvent& event) {
-  ShowCard(cards_[current_card_idx_], card_position::kBack);
+  current_card_pos_ = card_position::kBack;
+
+  ShowCard(cards_[current_card_idx_], current_card_pos_);
+  ShowCard(cards_[current_card_idx_], current_card_pos_);
 }
 
 void PracticeScreenImpl::OnPracticeCancelClicked(wxCommandEvent& event) {
@@ -56,5 +63,6 @@ void PracticeScreenImpl::OnPracticeNextClicked(wxCommandEvent& event) {
     return;
   }
 
-  ShowCard(cards_[current_card_idx_], card_position::kFront);
+  current_card_pos_ = card_position::kFront;
+  ShowCard(cards_[current_card_idx_], current_card_pos_);
 }

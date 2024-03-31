@@ -312,42 +312,30 @@ PracticeScreen::PracticeScreen( wxWindow* parent, wxWindowID id, const wxString&
 	bSizer6->Add( practice_title, 0, wxALL|wxEXPAND, 50 );
 
 	wxBoxSizer* bSizer3;
-	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
+	bSizer3 = new wxBoxSizer( wxVERTICAL );
 
-	bSizer3->SetMinSize( wxSize( 200,-1 ) );
-	wxBoxSizer* bSizer31;
-	bSizer31 = new wxBoxSizer( wxVERTICAL );
+	cardFrontTextBox = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT );
+	cardFrontTextBox->Wrap( -1 );
+	cardFrontTextBox->SetFont( wxFont( 15, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Noto Sans Georgian") ) );
+
+	bSizer3->Add( cardFrontTextBox, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND|wxLEFT|wxRIGHT, 80 );
+
+
+	bSizer6->Add( bSizer3, 2, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 0 );
+
+	wxBoxSizer* bSizer37;
+	bSizer37 = new wxBoxSizer( wxHORIZONTAL );
+
+	wxBoxSizer* boxSizerAddBtn;
+	boxSizerAddBtn = new wxBoxSizer( wxVERTICAL );
 
 	addCardPracticeBtn = new wxButton( this, wxID_ANY, wxT("+"), wxDefaultPosition, wxDefaultSize, 0 );
 	addCardPracticeBtn->SetMaxSize( wxSize( 50,50 ) );
 
-	bSizer31->Add( addCardPracticeBtn, 0, wxALIGN_CENTER|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	boxSizerAddBtn->Add( addCardPracticeBtn, 0, wxALIGN_CENTER|wxEXPAND, 5 );
 
 
-	bSizer3->Add( bSizer31, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-	wxBoxSizer* bSizer311;
-	bSizer311 = new wxBoxSizer( wxVERTICAL );
-
-	cardFrontTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_READONLY );
-	cardFrontTextBox->SetFont( wxFont( 15, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Noto Serif Georgian") ) );
-
-	bSizer311->Add( cardFrontTextBox, 3, wxBOTTOM|wxEXPAND|wxTOP, 50 );
-
-
-	bSizer3->Add( bSizer311, 3, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 0 );
-
-	wxBoxSizer* bSizer312;
-	bSizer312 = new wxBoxSizer( wxVERTICAL );
-
-	practiceNextBtn = new wxButton( this, wxID_ANY, wxT("Next"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer312->Add( practiceNextBtn, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-
-	bSizer3->Add( bSizer312, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxRESERVE_SPACE_EVEN_IF_HIDDEN, 5 );
-
-
-	bSizer6->Add( bSizer3, 2, wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 15 );
+	bSizer37->Add( boxSizerAddBtn, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxHORIZONTAL );
@@ -359,7 +347,19 @@ PracticeScreen::PracticeScreen( wxWindow* parent, wxWindowID id, const wxString&
 	bSizer11->Add( practiceCancelBtn, 1, wxALL, 5 );
 
 
-	bSizer6->Add( bSizer11, 1, wxALIGN_CENTER_HORIZONTAL, 5 );
+	bSizer37->Add( bSizer11, 3, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+	wxBoxSizer* boxSizerNextBtn;
+	boxSizerNextBtn = new wxBoxSizer( wxVERTICAL );
+
+	practiceNextBtn = new wxButton( this, wxID_ANY, wxT("Next"), wxDefaultPosition, wxDefaultSize, 0 );
+	boxSizerNextBtn->Add( practiceNextBtn, 1, wxALIGN_CENTER, 5 );
+
+
+	bSizer37->Add( boxSizerNextBtn, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxRESERVE_SPACE_EVEN_IF_HIDDEN, 5 );
+
+
+	bSizer6->Add( bSizer37, 1, wxEXPAND, 5 );
 
 
 	this->SetSizer( bSizer6 );
@@ -368,19 +368,21 @@ PracticeScreen::PracticeScreen( wxWindow* parent, wxWindowID id, const wxString&
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	cardFrontTextBox->Connect( wxEVT_SIZE, wxSizeEventHandler( PracticeScreen::OnSizeChanged ), NULL, this );
 	addCardPracticeBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeAddCardClicked ), NULL, this );
-	practiceNextBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeNextClicked ), NULL, this );
 	practiceShowBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeShowClicked ), NULL, this );
 	practiceCancelBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeCancelClicked ), NULL, this );
+	practiceNextBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeNextClicked ), NULL, this );
 }
 
 PracticeScreen::~PracticeScreen()
 {
 	// Disconnect Events
+	cardFrontTextBox->Disconnect( wxEVT_SIZE, wxSizeEventHandler( PracticeScreen::OnSizeChanged ), NULL, this );
 	addCardPracticeBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeAddCardClicked ), NULL, this );
-	practiceNextBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeNextClicked ), NULL, this );
 	practiceShowBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeShowClicked ), NULL, this );
 	practiceCancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeCancelClicked ), NULL, this );
+	practiceNextBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PracticeScreen::OnPracticeNextClicked ), NULL, this );
 
 }
 

@@ -174,17 +174,18 @@ class PracticeScreen : public wxFrame
 
 	protected:
 		wxStaticText* practice_title;
+		wxStaticText* cardFrontTextBox;
 		wxButton* addCardPracticeBtn;
-		wxTextCtrl* cardFrontTextBox;
-		wxButton* practiceNextBtn;
 		wxButton* practiceShowBtn;
 		wxButton* practiceCancelBtn;
+		wxButton* practiceNextBtn;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void OnSizeChanged( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnPracticeAddCardClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnPracticeNextClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPracticeShowClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPracticeCancelClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPracticeNextClicked( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

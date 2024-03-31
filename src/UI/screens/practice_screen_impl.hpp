@@ -37,6 +37,7 @@ class PracticeScreenImpl : public PracticeScreen {
   NotifyNoCardsToShow notify_no_cards_to_show_cb_;
   std::vector<Card> cards_;
   int current_card_idx_;
+  card_position current_card_pos_;
   int current_deck_id_;
 };
 

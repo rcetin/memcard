@@ -18,7 +18,8 @@ void AddCardBoardingScreenImpl::Show(int deck_id,
                             : no_cards_in_deck_text_;
 
   addCardOnboardingText->SetLabel(current_text_shown_);
-
+  const auto w = wxWindow::GetSize().GetWidth();
+  addCardOnboardingText->Wrap(w);
   AddCardBoardingScreen::Show(true);
 }
 
