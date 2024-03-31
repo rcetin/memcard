@@ -407,7 +407,7 @@ AddCardBoardingScreen::AddCardBoardingScreen( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer3611;
 	bSizer3611 = new wxBoxSizer( wxVERTICAL );
 
-	addCardOnboardingText = new wxStaticText( this, wxID_ANY, wxT("There are no cards in deck, \nPlease add card to start practice :)"), wxPoint( 0,0 ), wxDefaultSize, wxALIGN_CENTER_HORIZONTAL|wxST_NO_AUTORESIZE );
+	addCardOnboardingText = new wxStaticText( this, wxID_ANY, wxT("There are no cards in deck, Please add card to start practice :)"), wxPoint( 0,0 ), wxDefaultSize, wxALIGN_CENTER_HORIZONTAL|wxST_NO_AUTORESIZE );
 	addCardOnboardingText->Wrap( -1 );
 	addCardOnboardingText->SetFont( wxFont( 25, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
 
@@ -435,6 +435,7 @@ AddCardBoardingScreen::AddCardBoardingScreen( wxWindow* parent, wxWindowID id, c
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	addCardOnboardingText->Connect( wxEVT_SIZE, wxSizeEventHandler( AddCardBoardingScreen::OnSizeChanged ), NULL, this );
 	addCardAddBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddCardBoardingScreen::OnAddCardAddClicked ), NULL, this );
 	addCardCancelBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddCardBoardingScreen::OnAddCardCancelClicked ), NULL, this );
 }
@@ -442,6 +443,7 @@ AddCardBoardingScreen::AddCardBoardingScreen( wxWindow* parent, wxWindowID id, c
 AddCardBoardingScreen::~AddCardBoardingScreen()
 {
 	// Disconnect Events
+	addCardOnboardingText->Disconnect( wxEVT_SIZE, wxSizeEventHandler( AddCardBoardingScreen::OnSizeChanged ), NULL, this );
 	addCardAddBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddCardBoardingScreen::OnAddCardAddClicked ), NULL, this );
 	addCardCancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddCardBoardingScreen::OnAddCardCancelClicked ), NULL, this );
 

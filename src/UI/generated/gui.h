@@ -209,6 +209,7 @@ class AddCardBoardingScreen : public wxFrame
 		wxButton* addCardCancelBtn;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void OnSizeChanged( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnAddCardAddClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAddCardCancelClicked( wxCommandEvent& event ) { event.Skip(); }
 
