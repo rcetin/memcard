@@ -204,7 +204,7 @@ class AddCardBoardingScreen : public wxFrame
 
 	protected:
 		wxStaticText* dummy;
-		wxTextCtrl* addCardOnboardingText;
+		wxStaticText* addCardOnboardingText;
 		wxButton* addCardAddBtn;
 		wxButton* addCardCancelBtn;
 

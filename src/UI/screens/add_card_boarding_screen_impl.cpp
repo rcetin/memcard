@@ -13,7 +13,7 @@ void AddCardBoardingScreenImpl::Show(int deck_id,
                                      BoardingReason boarding_reason) {
   current_deck_id_ = deck_id;
 
-  addCardOnboardingText->SetValue(
+  addCardOnboardingText->SetLabel(
       (boarding_reason == BoardingReason::kCardsAreCompleted)
           ? cards_are_completed_text_
           : no_cards_in_deck_text_);

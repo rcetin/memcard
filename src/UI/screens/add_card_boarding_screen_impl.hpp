@@ -28,9 +28,9 @@ class AddCardBoardingScreenImpl : public AddCardBoardingScreen {
   int current_deck_id_;
 
   static constexpr const char* no_cards_in_deck_text_ =
-      "There are no cards in deck, Please add card to start practice :)";
+      "There are no cards in deck, \nPlease add card to start practice :)";
   static constexpr const char* cards_are_completed_text_ =
-      "You completed all the cards in your deck :)";
+      "You completed all the\ncards in your deck :)";
 };
 
 #endif

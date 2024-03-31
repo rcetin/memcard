@@ -332,10 +332,10 @@ PracticeScreen::PracticeScreen( wxWindow* parent, wxWindowID id, const wxString&
 	cardFrontTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_READONLY );
 	cardFrontTextBox->SetFont( wxFont( 15, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Noto Serif Georgian") ) );
 
-	bSizer311->Add( cardFrontTextBox, 3, wxEXPAND, 5 );
+	bSizer311->Add( cardFrontTextBox, 3, wxBOTTOM|wxEXPAND|wxTOP, 50 );
 
 
-	bSizer3->Add( bSizer311, 3, wxEXPAND, 5 );
+	bSizer3->Add( bSizer311, 3, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 0 );
 
 	wxBoxSizer* bSizer312;
 	bSizer312 = new wxBoxSizer( wxVERTICAL );
@@ -407,10 +407,11 @@ AddCardBoardingScreen::AddCardBoardingScreen( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer3611;
 	bSizer3611 = new wxBoxSizer( wxVERTICAL );
 
-	addCardOnboardingText = new wxTextCtrl( this, wxID_ANY, wxT("There are no cards in deck, Please add card to start practice :)"), wxDefaultPosition, wxDefaultSize, wxTE_CENTER|wxTE_MULTILINE|wxTE_READONLY|wxBORDER_NONE );
+	addCardOnboardingText = new wxStaticText( this, wxID_ANY, wxT("There are no cards in deck, \nPlease add card to start practice :)"), wxPoint( 0,0 ), wxDefaultSize, wxALIGN_CENTER_HORIZONTAL|wxST_NO_AUTORESIZE );
+	addCardOnboardingText->Wrap( -1 );
 	addCardOnboardingText->SetFont( wxFont( 25, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
 
-	bSizer3611->Add( addCardOnboardingText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 50 );
+	bSizer3611->Add( addCardOnboardingText, 0, wxALL|wxEXPAND, 5 );
 
 
 	bSizer6->Add( bSizer3611, 1, wxEXPAND, 5 );
