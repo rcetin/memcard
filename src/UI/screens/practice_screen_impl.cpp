@@ -37,8 +37,6 @@ void PracticeScreenImpl::Show(int deck_id) {
 void PracticeScreenImpl::ShowCard(const Card& card, card_position pos) {
   cardFrontTextBox->SetLabel((pos == card_position::kFront) ? card.front
                                                             : card.back);
-  // const auto width = wxWindow::GetSize().GetWidth();
-  // cardFrontTextBox->Wrap(width);
 }
 
 void PracticeScreenImpl::OnPracticeShowClicked(wxCommandEvent& event) {

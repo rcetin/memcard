@@ -118,8 +118,10 @@ class AddEditCardScreen : public wxFrame
 
 	protected:
 		wxStaticText* add_edit_card_title;
+		wxStaticText* staticTextCardFront;
 		wxTextCtrl* cardFrontTextBox;
 		wxStaticLine* m_staticline1;
+		wxStaticText* staticTextCardBack;
 		wxTextCtrl* cardBackTextBox;
 		wxButton* addEditCardSaveBtn;
 		wxButton* addEditCardCancelBtn;

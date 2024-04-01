@@ -189,23 +189,42 @@ AddEditCardScreen::AddEditCardScreen( wxWindow* parent, wxWindowID id, const wxS
 	add_edit_card_title->Wrap( -1 );
 	add_edit_card_title->SetFont( wxFont( 25, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
 
-	bSizer6->Add( add_edit_card_title, 0, wxALL|wxEXPAND, 50 );
+	bSizer6->Add( add_edit_card_title, 1, wxALL|wxEXPAND, 50 );
 
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 
-	bSizer3->SetMinSize( wxSize( 200,-1 ) );
+	wxBoxSizer* bSizer26;
+	bSizer26 = new wxBoxSizer( wxHORIZONTAL );
+
+	staticTextCardFront = new wxStaticText( this, wxID_ANY, wxT("Front:"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER_HORIZONTAL );
+	staticTextCardFront->Wrap( -1 );
+	bSizer26->Add( staticTextCardFront, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
 	cardFrontTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer3->Add( cardFrontTextBox, 1, wxEXPAND, 5 );
+	bSizer26->Add( cardFrontTextBox, 1, 0, 5 );
+
+
+	bSizer3->Add( bSizer26, 0, wxEXPAND, 5 );
 
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	bSizer3->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 
-	cardBackTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
-	bSizer3->Add( cardBackTextBox, 3, wxEXPAND, 5 );
+	wxBoxSizer* bSizer27;
+	bSizer27 = new wxBoxSizer( wxHORIZONTAL );
+
+	staticTextCardBack = new wxStaticText( this, wxID_ANY, wxT("Back:"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER_HORIZONTAL );
+	staticTextCardBack->Wrap( -1 );
+	bSizer27->Add( staticTextCardBack, 0, wxALL, 5 );
+
+	cardBackTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxBORDER_THEME );
+	bSizer27->Add( cardBackTextBox, 3, wxEXPAND, 5 );
 
 
-	bSizer6->Add( bSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 15 );
+	bSizer3->Add( bSizer27, 3, wxEXPAND, 5 );
+
+
+	bSizer6->Add( bSizer3, 3, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 15 );
 
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxHORIZONTAL );
