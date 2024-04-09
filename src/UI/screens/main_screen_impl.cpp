@@ -21,21 +21,22 @@ MainScreenImpl::MainScreenImpl()
 
 void MainScreenImpl::Show() { MainScreen::Show(true); }
 
-void MainScreenImpl::SetCallbacks(CreateNewDeckCb create_new_deck_cb,
-                                  CreateNewCardCb create_new_card_cb,
-                                  GetAllCardsCb get_all_cards_cb,
-                                  GetAllDecksCb get_all_decks_cb) {
+void MainScreenImpl::SetCallbacks(
+    CreateNewDeckCb create_new_deck_cb, CreateNewCardCb create_new_card_cb,
+    GetAllCardsCb get_all_cards_cb, GetAllDecksCb get_all_decks_cb,
+    NotifyPracticeStartedCb notify_practice_started_cb,
+    NotifyPracticeEndedCb notify_practice_ended_cb, GetCardCb get_card_cb) {
   create_deck_screen_->SetCallbacks(
       std::bind(&MainScreenImpl::OnNewDeckCreateRequestReceived, this,
                 std::placeholders::_1));
 
   select_deck_screen_->SetCallbacks(
       get_all_decks_cb,
-      std::bind(&MainScreenImpl::OnStartPracticeRequestReceived, this,
+      std::bind(&MainScreenImpl::OnDeckSelectedRequestReceived, this,
                 std::placeholders::_1));
 
   practice_screen_->SetCallbacks(
-      get_all_cards_cb,
+      get_card_cb,
       std::bind(&MainScreenImpl::OnAddCardRequestReceived, this,
                 std::placeholders::_1),
       std::bind(&MainScreenImpl::OnNoCardsToShowRequestReceived, this,
@@ -50,23 +51,15 @@ void MainScreenImpl::SetCallbacks(CreateNewDeckCb create_new_deck_cb,
   create_new_card_cb_ = create_new_card_cb;
   get_all_cards_cb_ = get_all_cards_cb;
   get_all_decks_cb_ = get_all_decks_cb;
+  notify_practice_started_cb_ = notify_practice_started_cb;
+  notify_practice_ended_cb_ = notify_practice_ended_cb;
+  get_card_cb_ = get_card_cb;
 }
 
-void MainScreenImpl::OnStartPracticeRequestReceived(int deck_id) const {
+void MainScreenImpl::OnDeckSelectedRequestReceived(int deck_id) const {
   std::cout << "Start Practice Clicked for deck id = " << deck_id << "\n";
 
-  auto cards = get_all_cards_cb_(deck_id);
-  for (auto& card : cards) {
-    std::cout << "card front= " << card.front << " back= " << card.back << "\n";
-  }
-
-  if (cards.empty()) {
-    std::cout << "Cards vector is empty for deck id =" << deck_id << "\n";
-    add_card_boarding_screen_->Show(
-        deck_id, AddCardBoardingScreenImpl::BoardingReason::kNoCardsInDeck);
-    return;
-  }
-
+  notify_practice_started_cb_(deck_id);
   practice_screen_->Show(deck_id);
 }
 

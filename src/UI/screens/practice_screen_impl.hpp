@@ -19,7 +19,7 @@ class PracticeScreenImpl : public PracticeScreen {
 
   PracticeScreenImpl();
 
-  void SetCallbacks(GetAllCardsCb, NotifyAddCardCb, NotifyNoCardsToShow);
+  void SetCallbacks(GetCardCb, NotifyAddCardCb, NotifyNoCardsToShow);
 
   void Show(void);
   void Show(int deck_id);
@@ -32,11 +32,10 @@ class PracticeScreenImpl : public PracticeScreen {
 
   void ShowCard(const Card&, card_position);
 
-  GetAllCardsCb get_all_cards_cb_;
+  GetCardCb get_card_cb_;
   NotifyAddCardCb notify_add_card_cb_;
   NotifyNoCardsToShow notify_no_cards_to_show_cb_;
-  std::vector<Card> cards_;
-  int current_card_idx_;
+  Card current_card_;
   card_position current_card_pos_;
   int current_deck_id_;
 };

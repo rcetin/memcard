@@ -6,12 +6,12 @@
 
 class SelectDeckScreenImpl : public SelectDeckScreen {
  public:
-  using StartPracticeCb = std::function<void(int deck_id)>;
+  using NotifyDeckSelected = std::function<void(int deck_id)>;
 
   SelectDeckScreenImpl();
 
   void SetCallbacks(GetAllDecksCb get_all_decks_cb,
-                    StartPracticeCb start_practice_cb);
+                    NotifyDeckSelected notify_deck_selected);
 
   void Show();
 
@@ -25,7 +25,7 @@ class SelectDeckScreenImpl : public SelectDeckScreen {
   void ClearDecksList(void);
 
   GetAllDecksCb get_all_decks_cb_;
-  StartPracticeCb start_practice_cb_;
+  NotifyDeckSelected notify_deck_selected_;
   int selected_deck_idx;
 };
 

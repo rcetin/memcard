@@ -11,17 +11,17 @@ SelectDeckScreenImpl::SelectDeckScreenImpl()
     : SelectDeckScreen(nullptr, wxID_ANY, "Select Deck", wxPoint(0, 0),
                        wxDefaultSize, 0),
       get_all_decks_cb_{nullptr},
-      start_practice_cb_{nullptr},
+      notify_deck_selected_{nullptr},
       selected_deck_idx{-1} {
   selectDeckListCtrlr->InsertColumn(0, _("Id"));
   selectDeckListCtrlr->InsertColumn(1, _("Name"));
   ResizeList();
 }
 
-void SelectDeckScreenImpl::SetCallbacks(GetAllDecksCb get_all_decks_cb,
-                                        StartPracticeCb start_practice_cb) {
+void SelectDeckScreenImpl::SetCallbacks(
+    GetAllDecksCb get_all_decks_cb, NotifyDeckSelected notify_deck_selected) {
   get_all_decks_cb_ = get_all_decks_cb;
-  start_practice_cb_ = start_practice_cb;
+  notify_deck_selected_ = notify_deck_selected;
 }
 
 void SelectDeckScreenImpl::ResizeList(void) {
@@ -52,7 +52,7 @@ void SelectDeckScreenImpl::OnSelectDeckClicked(wxCommandEvent& event) {
     return;
   }
 
-  start_practice_cb_(selected_deck_idx);
+  notify_deck_selected_(selected_deck_idx);
   selected_deck_idx = -1;
   ClearDecksList();
   SelectDeckScreen::Show(false);

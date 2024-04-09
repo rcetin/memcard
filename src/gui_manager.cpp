@@ -1,5 +1,7 @@
 #include "gui_manager.hpp"
 
+#include <wx/log.h>
+
 #include <functional>
 #include <utility>
 
@@ -7,15 +9,20 @@
 #include "database/sqlite_handler.hpp"
 
 GUIManager::GUIManager(MainScreenImpl* main_screen,
-                       std::unique_ptr<IDatabaseHandler> database_handler)
+                       std::shared_ptr<IDatabaseHandler> database_handler,
+                       std::shared_ptr<ISessionManager> session_manager)
     : main_screen_{main_screen},
-      database_handler_{std::move(database_handler)} {
+      database_handler_{std::move(database_handler)},
+      session_manager_(std::move(session_manager)) {
   main_screen_->SetCallbacks(
       std::bind(&GUIManager::CreateNewDeck, this, std::placeholders::_1),
       std::bind(&GUIManager::CreateNewCard, this, std::placeholders::_1,
                 std::placeholders::_2),
       std::bind(&GUIManager::GetAllCards, this, std::placeholders::_1),
-      std::bind(&GUIManager::GetAllDecks, this));
+      std::bind(&GUIManager::GetAllDecks, this),
+      std::bind(&GUIManager::PracticeIsStarted, this, std::placeholders::_1),
+      std::bind(&GUIManager::PracticeIsEnded, this, std::placeholders::_1),
+      std::bind(&GUIManager::GetCard, this));
 }
 
 void GUIManager::CreateNewDeck(Deck& deck) {
@@ -50,9 +57,28 @@ std::vector<Deck> GUIManager::GetAllDecks(void) const {
   return database_handler_->GetAllDecks();
 }
 
+void GUIManager::PracticeIsStarted(int deck_id) const {
+  wxLogDebug("GUI: Session is started!");
+
+  session_manager_->StartSesssion(deck_id);
+}
+
+void GUIManager::PracticeIsEnded(int deck_id) const {
+  ///
+}
+
+std::optional<Card> GUIManager::GetCard(void) const {
+  return session_manager_->GetCard();
+}
+
 void GUIManager::StartApplication() const { main_screen_->Show(); }
 
 std::unique_ptr<GUIManager> CreateGUIManager() {
-  return std::make_unique<GUIManager>(
-      new MainScreenImpl(), std::make_unique<SQLiteHandler>("memcard.db"));
+  static std::shared_ptr<IDatabaseHandler> db_handler =
+      std::make_shared<SQLiteHandler>("memcard.db");
+  static std::shared_ptr<ISessionManager> session_mgr =
+      std::make_shared<SessionManager>(db_handler);
+
+  return std::make_unique<GUIManager>(new MainScreenImpl(), db_handler,
+                                      session_mgr);
 }
