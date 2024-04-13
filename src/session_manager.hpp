@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <optional>
+#include <vector>
 
 #include "database/database_handler.hpp"
 #include "types/card.hpp"
@@ -11,7 +12,7 @@ class ISessionManager {
  public:
   virtual void StartSesssion(int deck_id) = 0;
 
-  virtual std::optional<Card> GetCard(void) const = 0;
+  virtual std::optional<Card> GetCard(void) = 0;
 
   virtual ~ISessionManager() = default;
 };
@@ -30,7 +31,7 @@ class SessionManager : public ISessionManager {
   SessionManager& operator=(SessionManager&&) = delete;
 
   void StartSesssion(int deck_id) override;
-  std::optional<Card> GetCard(void) const override;
+  std::optional<Card> GetCard(void) override;
 
   ~SessionManager() = default;
 
@@ -38,6 +39,7 @@ class SessionManager : public ISessionManager {
   std::shared_ptr<IDatabaseHandler> database_handler_;
   int deck_id_;
   bool is_session_active_;
+  std::vector<Card> cards_;
 };
 
 std::unique_ptr<SessionManager> CreateSessionManager(

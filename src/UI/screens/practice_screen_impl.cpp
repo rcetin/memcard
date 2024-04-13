@@ -25,8 +25,7 @@ void PracticeScreenImpl::Show(void) { PracticeScreen::Show(true); }
 void PracticeScreenImpl::Show(int deck_id) {
   const auto cardopt = get_card_cb_();
   if (!cardopt.has_value()) {
-    Message m("");
-    m.ShowError("Internal error! Card cannot be shown now.");
+    notify_no_cards_to_show_cb_(current_deck_id_);
     return;
   }
 
@@ -56,8 +55,7 @@ void PracticeScreenImpl::OnPracticeAddCardClicked(wxCommandEvent& event) {
 void PracticeScreenImpl::OnPracticeNextClicked(wxCommandEvent& event) {
   const auto cardopt = get_card_cb_();
   if (!cardopt.has_value()) {
-    Message m("");
-    m.ShowError("Internal error! Card cannot be shown now.");
+    notify_no_cards_to_show_cb_(current_deck_id_);
     return;
   }
 

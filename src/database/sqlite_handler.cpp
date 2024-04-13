@@ -67,6 +67,9 @@ std::vector<Card> SQLiteHandler::GetAllCardsByDeck(int deck_id) const {
                          std::string{back}, id, deck_id});
   }
 
+  std::cout << "Getting cards from db for deck: " << deck_id << "\n";
+  std::cout << "sizeof cards=" << cards.size() << "\n";
+
   return cards;
 }
 

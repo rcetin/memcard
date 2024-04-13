@@ -59,6 +59,13 @@ void MainScreenImpl::SetCallbacks(
 void MainScreenImpl::OnDeckSelectedRequestReceived(int deck_id) const {
   std::cout << "Start Practice Clicked for deck id = " << deck_id << "\n";
 
+  auto cards = get_all_cards_cb_(deck_id);
+  if (cards.empty()) {
+    add_card_boarding_screen_->Show(
+        deck_id, AddCardBoardingScreenImpl::BoardingReason::kNoCardsInDeck);
+    return;
+  }
+
   notify_practice_started_cb_(deck_id);
   practice_screen_->Show(deck_id);
 }
@@ -70,6 +77,7 @@ void MainScreenImpl::OnAddCardRequestReceived(int deck_id) const {
 void MainScreenImpl::OnNoCardsToShowRequestReceived(int deck_id) const {
   add_card_boarding_screen_->Show(
       deck_id, AddCardBoardingScreenImpl::BoardingReason::kCardsAreCompleted);
+  practice_screen_->Hide();
 }
 
 void MainScreenImpl::onCreateDeckClicked(wxCommandEvent& event) {
