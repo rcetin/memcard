@@ -6,18 +6,22 @@
 
 class SelectDeckScreenImpl : public SelectDeckScreen {
  public:
-  using NotifyDeckSelected = std::function<void(int deck_id)>;
+  using NotifyDeckPracticeStarted = std::function<void(int deck_id)>;
+  using NotifyDeckBrowseStarted = std::function<void(int deck_id)>;
 
   SelectDeckScreenImpl();
 
   void SetCallbacks(GetAllDecksCb get_all_decks_cb,
-                    NotifyDeckSelected notify_deck_selected);
+                    GetAllCardsCb get_all_cards_cb,
+                    NotifyDeckPracticeStarted notify_deck_practice_started,
+                    NotifyDeckBrowseStarted notify_deck_browse_started);
 
   void Show();
 
  private:
-  void OnSelectDeckClicked(wxCommandEvent& event) override;
+  void OnSelectDeckPracticeClicked(wxCommandEvent& event) override;
   void OnSelectDeckCancelClicked(wxCommandEvent& event) override;
+  void OnSelectDeckBrowseClicked(wxCommandEvent& event) override;
   void OnItemSelected(wxListEvent& event) override;
 
   void ResizeList(void);
@@ -25,7 +29,9 @@ class SelectDeckScreenImpl : public SelectDeckScreen {
   void ClearDecksList(void);
 
   GetAllDecksCb get_all_decks_cb_;
-  NotifyDeckSelected notify_deck_selected_;
+  GetAllCardsCb get_all_cards_cb_;
+  NotifyDeckPracticeStarted notify_deck_practice_started_;
+  NotifyDeckBrowseStarted notify_deck_browse_started_;
   int selected_deck_idx;
 };
 

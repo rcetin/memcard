@@ -38,12 +38,12 @@ class MainScreen : public wxFrame
 	protected:
 		wxStaticText* welcome_title;
 		wxButton* create_deck_btn;
-		wxButton* practice_btn;
+		wxButton* browse_decks_btn;
 		wxButton* quit_btn;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void onCreateDeckClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnPracticeClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBrowseDecksClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnQuitClicked( wxCommandEvent& event ) { event.Skip(); }
 
 
@@ -92,12 +92,14 @@ class SelectDeckScreen : public wxFrame
 	protected:
 		wxStaticText* select_deck_title;
 		wxListCtrl* selectDeckListCtrlr;
-		wxButton* SelectDeckSelectBtn;
+		wxButton* SelectDeckPracticeBtn;
+		wxButton* SelectDeckBrowseBtn;
 		wxButton* SelectDeckCancelBtn;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnItemSelected( wxListEvent& event ) { event.Skip(); }
-		virtual void OnSelectDeckClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectDeckPracticeClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectDeckBrowseClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectDeckCancelClicked( wxCommandEvent& event ) { event.Skip(); }
 
 
@@ -106,6 +108,37 @@ class SelectDeckScreen : public wxFrame
 		SelectDeckScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~SelectDeckScreen();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class BrowseCardsScreen
+///////////////////////////////////////////////////////////////////////////////
+class BrowseCardsScreen : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* browse_cards_title;
+		wxListCtrl* browseCardsListCtrlr;
+		wxButton* BrowseCardsShowBtn;
+		wxButton* BrowseCardsEditBtn;
+		wxButton* BrowseCardsDeleteBtn;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnWindowSizeChanged( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnCardSelected( wxListEvent& event ) { event.Skip(); }
+		virtual void OnListSizeChanged( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnBrowseCardsShowClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBrowseCardsEditClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBrowseCardsDeleteClicked( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		BrowseCardsScreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~BrowseCardsScreen();
 
 };
 

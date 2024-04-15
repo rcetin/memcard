@@ -6,6 +6,7 @@
 #include "UI/generated/gui.h"
 #include "add_card_boarding_screen_impl.hpp"
 #include "add_edit_card_screen_impl.hpp"
+#include "browse_cards_screen_impl.hpp"
 #include "create_deck_screen_impl.hpp"
 #include "practice_screen_impl.hpp"
 #include "select_deck_screen_impl.hpp"
@@ -30,6 +31,7 @@ class MainScreenImpl : public MainScreen {
   ShowCardScreenImpl* show_card_screen_;
   PracticeScreenImpl* practice_screen_;
   AddCardBoardingScreenImpl* add_card_boarding_screen_;
+  BrowseCardsScreenImpl* browse_cards_screen_;
 
   CreateNewCardCb create_new_card_cb_;
   CreateNewDeckCb create_new_deck_cb_;
@@ -40,13 +42,14 @@ class MainScreenImpl : public MainScreen {
   GetCardCb get_card_cb_;
 
   void onCreateDeckClicked(wxCommandEvent& event) override;
-  void OnPracticeClicked(wxCommandEvent& event) override;
   void OnQuitClicked(wxCommandEvent& event) override;
+  void OnBrowseDecksClicked(wxCommandEvent& event) override;
 
   /// Callbacks
   void OnNewDeckCreateRequestReceived(Deck&) const;
   void OnNewCardCreateRequestReceived(const Deck&, Card&) const;
-  void OnDeckSelectedRequestReceived(int deck_id) const;
+  void OnDeckPracticeStartedRequestReceived(int deck_id) const;
+  void OnDeckBrowseStartedRequestReceived(int deck_id) const;
   void OnAddCardRequestReceived(int deck_id) const;
   void OnNoCardsToShowRequestReceived(int deck_id) const;
 

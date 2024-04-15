@@ -13,6 +13,7 @@ MainScreenImpl::MainScreenImpl()
       show_card_screen_{new ShowCardScreenImpl()},
       practice_screen_{new PracticeScreenImpl()},
       add_card_boarding_screen_{new AddCardBoardingScreenImpl()},
+      browse_cards_screen_{new BrowseCardsScreenImpl()},
       create_new_card_cb_{nullptr},
       create_new_deck_cb_{nullptr},
       get_all_cards_cb_{nullptr},
@@ -31,9 +32,13 @@ void MainScreenImpl::SetCallbacks(
                 std::placeholders::_1));
 
   select_deck_screen_->SetCallbacks(
-      get_all_decks_cb,
-      std::bind(&MainScreenImpl::OnDeckSelectedRequestReceived, this,
+      get_all_decks_cb, get_all_cards_cb,
+      std::bind(&MainScreenImpl::OnDeckPracticeStartedRequestReceived, this,
+                std::placeholders::_1),
+      std::bind(&MainScreenImpl::OnDeckBrowseStartedRequestReceived, this,
                 std::placeholders::_1));
+
+  browse_cards_screen_->SetCallbacks(get_all_cards_cb);
 
   practice_screen_->SetCallbacks(
       get_card_cb,
@@ -56,7 +61,12 @@ void MainScreenImpl::SetCallbacks(
   get_card_cb_ = get_card_cb;
 }
 
-void MainScreenImpl::OnDeckSelectedRequestReceived(int deck_id) const {
+void MainScreenImpl::OnDeckBrowseStartedRequestReceived(int deck_id) const {
+  select_deck_screen_->Hide();
+  browse_cards_screen_->Show(deck_id);
+}
+
+void MainScreenImpl::OnDeckPracticeStartedRequestReceived(int deck_id) const {
   std::cout << "Start Practice Clicked for deck id = " << deck_id << "\n";
 
   auto cards = get_all_cards_cb_(deck_id);
@@ -84,10 +94,6 @@ void MainScreenImpl::onCreateDeckClicked(wxCommandEvent& event) {
   create_deck_screen_->Show();
 }
 
-void MainScreenImpl::OnPracticeClicked(wxCommandEvent& event) {
-  select_deck_screen_->Show();
-}
-
 void MainScreenImpl::OnQuitClicked(wxCommandEvent& event) {
   Close(true);
   exit(0);
@@ -95,6 +101,10 @@ void MainScreenImpl::OnQuitClicked(wxCommandEvent& event) {
 
 void MainScreenImpl::OnNewDeckCreateRequestReceived(Deck& deck) const {
   create_new_deck_cb_(deck);
+  select_deck_screen_->Show();
+}
+
+void MainScreenImpl::OnBrowseDecksClicked(wxCommandEvent& event) {
   select_deck_screen_->Show();
 }
 

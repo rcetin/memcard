@@ -28,8 +28,8 @@ MainScreen::MainScreen( wxWindow* parent, wxWindowID id, const wxString& title, 
 	create_deck_btn = new wxButton( this, wxID_ANY, wxT("Create Deck"), wxPoint( -1,-1 ), wxDefaultSize, 0 );
 	bSizer2->Add( create_deck_btn, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 
-	practice_btn = new wxButton( this, wxID_ANY, wxT("Practice"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( practice_btn, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	browse_decks_btn = new wxButton( this, wxID_ANY, wxT("Browse"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer2->Add( browse_decks_btn, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	quit_btn = new wxButton( this, wxID_ANY, wxT("Quit"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( quit_btn, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
@@ -45,7 +45,7 @@ MainScreen::MainScreen( wxWindow* parent, wxWindowID id, const wxString& title, 
 
 	// Connect Events
 	create_deck_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::onCreateDeckClicked ), NULL, this );
-	practice_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::OnPracticeClicked ), NULL, this );
+	browse_decks_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::OnBrowseDecksClicked ), NULL, this );
 	quit_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::OnQuitClicked ), NULL, this );
 }
 
@@ -53,7 +53,7 @@ MainScreen::~MainScreen()
 {
 	// Disconnect Events
 	create_deck_btn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::onCreateDeckClicked ), NULL, this );
-	practice_btn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::OnPracticeClicked ), NULL, this );
+	browse_decks_btn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::OnBrowseDecksClicked ), NULL, this );
 	quit_btn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainScreen::OnQuitClicked ), NULL, this );
 
 }
@@ -140,16 +140,19 @@ SelectDeckScreen::SelectDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 	selectDeckListCtrlr = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
 	selectDeckListCtrlr->SetFont( wxFont( 15, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Noto Serif Georgian") ) );
 
-	bSizer3->Add( selectDeckListCtrlr, 0, 0, 0 );
+	bSizer3->Add( selectDeckListCtrlr, 0, wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 0 );
 
 
-	bSizer6->Add( bSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1 );
+	bSizer6->Add( bSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxRIGHT, 20 );
 
 	wxBoxSizer* bSizer31;
 	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
 
-	SelectDeckSelectBtn = new wxButton( this, wxID_ANY, wxT("Select"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer31->Add( SelectDeckSelectBtn, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	SelectDeckPracticeBtn = new wxButton( this, wxID_ANY, wxT("Practice"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( SelectDeckPracticeBtn, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+
+	SelectDeckBrowseBtn = new wxButton( this, wxID_ANY, wxT("Browse"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( SelectDeckBrowseBtn, 0, wxALL, 5 );
 
 	SelectDeckCancelBtn = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer31->Add( SelectDeckCancelBtn, 0, wxALL, 5 );
@@ -165,7 +168,8 @@ SelectDeckScreen::SelectDeckScreen( wxWindow* parent, wxWindowID id, const wxStr
 
 	// Connect Events
 	selectDeckListCtrlr->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( SelectDeckScreen::OnItemSelected ), NULL, this );
-	SelectDeckSelectBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckClicked ), NULL, this );
+	SelectDeckPracticeBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckPracticeClicked ), NULL, this );
+	SelectDeckBrowseBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckBrowseClicked ), NULL, this );
 	SelectDeckCancelBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckCancelClicked ), NULL, this );
 }
 
@@ -173,8 +177,75 @@ SelectDeckScreen::~SelectDeckScreen()
 {
 	// Disconnect Events
 	selectDeckListCtrlr->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( SelectDeckScreen::OnItemSelected ), NULL, this );
-	SelectDeckSelectBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckClicked ), NULL, this );
+	SelectDeckPracticeBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckPracticeClicked ), NULL, this );
+	SelectDeckBrowseBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckBrowseClicked ), NULL, this );
 	SelectDeckCancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SelectDeckScreen::OnSelectDeckCancelClicked ), NULL, this );
+
+}
+
+BrowseCardsScreen::BrowseCardsScreen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer6;
+	bSizer6 = new wxBoxSizer( wxVERTICAL );
+
+	browse_cards_title = new wxStaticText( this, wxID_ANY, wxT("Cards"), wxPoint( 0,0 ), wxDefaultSize, wxALIGN_CENTER_HORIZONTAL );
+	browse_cards_title->Wrap( -1 );
+	browse_cards_title->SetFont( wxFont( 25, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Monospace") ) );
+
+	bSizer6->Add( browse_cards_title, 0, wxALL|wxEXPAND, 50 );
+
+	wxBoxSizer* bSizer3;
+	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
+
+	browseCardsListCtrlr = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
+	browseCardsListCtrlr->SetFont( wxFont( 15, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Noto Serif Georgian") ) );
+
+	bSizer3->Add( browseCardsListCtrlr, 0, wxEXPAND, 0 );
+
+
+	bSizer6->Add( bSizer3, 0, wxALIGN_CENTER|wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxRIGHT, 20 );
+
+	wxBoxSizer* bSizer31;
+	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
+
+	BrowseCardsShowBtn = new wxButton( this, wxID_ANY, wxT("Show"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( BrowseCardsShowBtn, 0, wxALL, 5 );
+
+	BrowseCardsEditBtn = new wxButton( this, wxID_ANY, wxT("Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( BrowseCardsEditBtn, 0, wxALL, 5 );
+
+	BrowseCardsDeleteBtn = new wxButton( this, wxID_ANY, wxT("Delete"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( BrowseCardsDeleteBtn, 0, wxALL, 5 );
+
+
+	bSizer6->Add( bSizer31, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+
+	this->SetSizer( bSizer6 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnWindowSizeChanged ) );
+	browseCardsListCtrlr->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( BrowseCardsScreen::OnCardSelected ), NULL, this );
+	browseCardsListCtrlr->Connect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnListSizeChanged ), NULL, this );
+	BrowseCardsShowBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowClicked ), NULL, this );
+	BrowseCardsEditBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsEditClicked ), NULL, this );
+	BrowseCardsDeleteBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsDeleteClicked ), NULL, this );
+}
+
+BrowseCardsScreen::~BrowseCardsScreen()
+{
+	// Disconnect Events
+	this->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnWindowSizeChanged ) );
+	browseCardsListCtrlr->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( BrowseCardsScreen::OnCardSelected ), NULL, this );
+	browseCardsListCtrlr->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnListSizeChanged ), NULL, this );
+	BrowseCardsShowBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowClicked ), NULL, this );
+	BrowseCardsEditBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsEditClicked ), NULL, this );
+	BrowseCardsDeleteBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsDeleteClicked ), NULL, this );
 
 }
 
@@ -217,7 +288,7 @@ AddEditCardScreen::AddEditCardScreen( wxWindow* parent, wxWindowID id, const wxS
 	staticTextCardBack->Wrap( -1 );
 	bSizer27->Add( staticTextCardBack, 0, wxALL, 5 );
 
-	cardBackTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxBORDER_THEME );
+	cardBackTextBox = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	bSizer27->Add( cardBackTextBox, 3, wxEXPAND, 5 );
 
 

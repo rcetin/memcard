@@ -12,17 +12,19 @@ SelectDeckScreenImpl::SelectDeckScreenImpl()
     : SelectDeckScreen(nullptr, wxID_ANY, "Select Deck", wxPoint(0, 0),
                        wxDefaultSize, 0),
       get_all_decks_cb_{nullptr},
-      notify_deck_selected_{nullptr},
-      selected_deck_idx{-1} {
-  selectDeckListCtrlr->InsertColumn(0, _("Id"));
-  selectDeckListCtrlr->InsertColumn(1, _("Name"));
-  ResizeList();
-}
+      get_all_cards_cb_{nullptr},
+      notify_deck_practice_started_{nullptr},
+      notify_deck_browse_started_{nullptr},
+      selected_deck_idx{-1} {}
 
 void SelectDeckScreenImpl::SetCallbacks(
-    GetAllDecksCb get_all_decks_cb, NotifyDeckSelected notify_deck_selected) {
+    GetAllDecksCb get_all_decks_cb, GetAllCardsCb get_all_cards_cb,
+    NotifyDeckPracticeStarted notify_deck_practice_started,
+    NotifyDeckBrowseStarted notify_deck_browse_started) {
   get_all_decks_cb_ = get_all_decks_cb;
-  notify_deck_selected_ = notify_deck_selected;
+  get_all_cards_cb_ = get_all_cards_cb;
+  notify_deck_practice_started_ = notify_deck_practice_started;
+  notify_deck_browse_started_ = notify_deck_browse_started;
 }
 
 void SelectDeckScreenImpl::ResizeList(void) {
@@ -31,6 +33,10 @@ void SelectDeckScreenImpl::ResizeList(void) {
 }
 
 void SelectDeckScreenImpl::Show() {
+  selectDeckListCtrlr->ClearAll();
+  selectDeckListCtrlr->InsertColumn(0, _("Id"));
+  selectDeckListCtrlr->InsertColumn(1, _("Name"));
+
   auto decks = get_all_decks_cb_();
 
   std::cout << "Got decks from Select Deck screen\n";
@@ -49,7 +55,7 @@ void SelectDeckScreenImpl::Show() {
   SelectDeckScreen::Show(true);
 }
 
-void SelectDeckScreenImpl::OnSelectDeckClicked(wxCommandEvent& event) {
+void SelectDeckScreenImpl::OnSelectDeckPracticeClicked(wxCommandEvent& event) {
   if (-1 == selected_deck_idx) {
     std::cout << "No deck is selected\n";
     Message* msgs = new Message(wxT("Messages"));
@@ -57,10 +63,14 @@ void SelectDeckScreenImpl::OnSelectDeckClicked(wxCommandEvent& event) {
     return;
   }
 
-  notify_deck_selected_(selected_deck_idx);
+  notify_deck_practice_started_(selected_deck_idx);
   selected_deck_idx = -1;
   ClearDecksList();
   SelectDeckScreen::Show(false);
+}
+
+void SelectDeckScreenImpl::OnSelectDeckBrowseClicked(wxCommandEvent& event) {
+  notify_deck_browse_started_(selected_deck_idx);
 }
 
 void SelectDeckScreenImpl::OnItemSelected(wxListEvent& event) {
