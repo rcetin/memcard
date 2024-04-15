@@ -2,6 +2,7 @@
 
 #include <wx/log.h>
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 
@@ -33,9 +34,13 @@ void SelectDeckScreenImpl::Show() {
   auto decks = get_all_decks_cb_();
 
   std::cout << "Got decks from Select Deck screen\n";
+
+  std::sort(decks.begin(), decks.end(),
+            [](const Deck& l, const Deck& r) { return l.id > r.id; });
+
   for (auto& deck : decks) {
     std::cout << deck.name << " " << deck.id << "\n";
-    // selectDeckListCtrlr->AppendColumn(deck.name);
+
     long index = selectDeckListCtrlr->InsertItem(0, std::to_string(deck.id));
     selectDeckListCtrlr->SetItem(index, 1, deck.name);
     ResizeList();
