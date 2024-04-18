@@ -10,6 +10,8 @@
 using CreateNewDeckCb = std::function<void(Deck&)>;
 using CreateNewCardCb = std::function<void(int deck_id, Card&)>;
 using GetAllCardsCb = std::function<std::vector<Card>(int deck_id)>;
+using GetCardByIdCb = std::function<std::optional<Card>(int card_id)>;
+using EditCardCb = std::function<void(int card_id, Card)>;
 using GetAllDecksCb = std::function<std::vector<Deck>(void)>;
 using NotifyAddCardCb = std::function<void(int)>;
 using NotifyPracticeStartedCb = std::function<void(int deck_id)>;

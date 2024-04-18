@@ -19,7 +19,7 @@ void SessionManager::StartSesssion(int deck_id) {
     return;
   }
 
-  cards_ = database_handler_->GetAllCardsByDeck(deck_id);
+  cards_ = database_handler_->GetAllCardsByDeckId(deck_id);
 
   deck_id_ = deck_id;
   is_session_active_ = true;

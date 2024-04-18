@@ -34,6 +34,8 @@ class GUIManager {
   void PracticeIsStarted(int) const;
   void PracticeIsEnded(int) const;
   std::optional<Card> GetCard(void) const;
+  std::optional<Card> GetCardById(int) const;
+  void EditCard(int card_id, Card card) const;
 
   MainScreenImpl* main_screen_;
   std::shared_ptr<IDatabaseHandler> database_handler_;

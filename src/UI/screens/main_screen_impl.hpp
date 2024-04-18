@@ -20,7 +20,8 @@ class MainScreenImpl : public MainScreen {
 
   void SetCallbacks(CreateNewDeckCb, CreateNewCardCb, GetAllCardsCb,
                     GetAllDecksCb, NotifyPracticeStartedCb,
-                    NotifyPracticeEndedCb, GetCardCb);
+                    NotifyPracticeEndedCb, GetCardCb, GetCardByIdCb,
+                    EditCardCb);
 
   void Show();
 
@@ -40,6 +41,8 @@ class MainScreenImpl : public MainScreen {
   NotifyPracticeStartedCb notify_practice_started_cb_;
   NotifyPracticeEndedCb notify_practice_ended_cb_;
   GetCardCb get_card_cb_;
+  EditCardCb edit_card_cb_;
+  GetCardByIdCb get_card_by_id_cb_;
 
   void onCreateDeckClicked(wxCommandEvent& event) override;
   void OnQuitClicked(wxCommandEvent& event) override;
@@ -52,6 +55,7 @@ class MainScreenImpl : public MainScreen {
   void OnDeckBrowseStartedRequestReceived(int deck_id) const;
   void OnAddCardRequestReceived(int deck_id) const;
   void OnNoCardsToShowRequestReceived(int deck_id) const;
+  void OnEditingCardStarted(int card_id) const;
 
   int current_deck_id_;
 };

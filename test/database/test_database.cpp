@@ -65,8 +65,8 @@ TEST_F(DatabaseTestFixture, GetStoredCard) {
   ASSERT_NO_THROW(sut_.StoreCard(d.id, c));
   ASSERT_EQ(c.id, 2);
 
-  decltype(sut_.GetAllCardsByDeck(d.id)) cards;
-  ASSERT_NO_THROW(cards = sut_.GetAllCardsByDeck(d.id));
+  decltype(sut_.GetAllCardsByDeckId(d.id)) cards;
+  ASSERT_NO_THROW(cards = sut_.GetAllCardsByDeckId(d.id));
   ASSERT_EQ(cards.size(), 2);
 }
 
@@ -85,9 +85,49 @@ TEST_F(DatabaseTestFixture, testMove) {
   ASSERT_EQ(c.id, 1);
 
   auto db2 = std::move(db1);
-  decltype(db2->GetAllCardsByDeck(d.id)) cards;
-  ASSERT_NO_THROW(cards = db2->GetAllCardsByDeck(d.id));
+  decltype(db2->GetAllCardsByDeckId(d.id)) cards;
+  ASSERT_NO_THROW(cards = db2->GetAllCardsByDeckId(d.id));
   ASSERT_EQ(cards.size(), 1);
 
   std::system("rm -f test2.db");
+}
+
+TEST_F(DatabaseTestFixture, testGetCardById) {
+  Deck d{"myDeck", -1};
+
+  ASSERT_NO_THROW(sut_.StoreDeck(d));
+  ASSERT_EQ(d.id, 1);
+
+  auto c = Card{"card1", "front1", "back1", -1, d.id};
+
+  ASSERT_NO_THROW(sut_.StoreCard(d.id, c));
+  ASSERT_EQ(c.id, 1);
+
+  ASSERT_NE(std::nullopt, sut_.GetCardById(1));
+  ASSERT_EQ(std::nullopt, sut_.GetCardById(5));
+}
+
+TEST_F(DatabaseTestFixture, testEditCard) {
+  Deck d{"myDeck", -1};
+
+  ASSERT_NO_THROW(sut_.StoreDeck(d));
+  ASSERT_EQ(d.id, 1);
+
+  auto c = Card{"card1", "front1", "back1", -1, d.id};
+
+  ASSERT_NO_THROW(sut_.StoreCard(d.id, c));
+  ASSERT_EQ(c.id, 1);
+
+  auto edited = c;
+  edited.front = "front2";
+  edited.back = "back2";
+
+  ASSERT_TRUE(sut_.EditCard(1, edited));
+  auto edited_from_db = sut_.GetCardById(1);
+  ASSERT_NE(std::nullopt, edited_from_db);
+  ASSERT_TRUE(edited_from_db.has_value());
+
+  auto val = edited_from_db.value();
+  ASSERT_EQ(val.front, "front2");
+  ASSERT_EQ(val.back, "back2");
 }

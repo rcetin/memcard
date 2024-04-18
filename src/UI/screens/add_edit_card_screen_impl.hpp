@@ -10,13 +10,16 @@ class AddEditCardScreenImpl : public AddEditCardScreen {
 
   AddEditCardScreenImpl();
 
-  void SetCallbacks(CreateNewCardCb);
+  void SetCallbacks(CreateNewCardCb, GetCardByIdCb, EditCardCb);
   void Show();
-  void Show(Operation, int deck_id);
+  void Show(Operation, int id);
 
  private:
   void OnAddEditCardSaveClicked(wxCommandEvent& event) override;
   void OnAddEditCardCancelClicked(wxCommandEvent& event) override;
+
+  void ArrangeAddCardScreen(int deck_id);
+  void ArrangeEditCardScreen(int card_id);
 
   static constexpr const char* add_operation_title = "Add Card";
   static constexpr const char* edit_operation_title = "Edit Card";
@@ -24,7 +27,12 @@ class AddEditCardScreenImpl : public AddEditCardScreen {
   static constexpr const char* edit_button_title = "Edit";
 
   CreateNewCardCb create_new_card_cb_;
+  GetCardByIdCb get_card_by_id_cb_;
+  EditCardCb edit_card_cb_;
   int current_deck_id_;
+  int current_edited_card_id_;
+  Card current_edited_card_;
+  Operation current_op_;
 };
 
 #endif

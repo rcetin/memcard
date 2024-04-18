@@ -49,7 +49,7 @@ void SQLiteHandler::StoreCard(int deck_id, Card& card) {
   card.id = db_.getLastInsertRowid();
 }
 
-std::vector<Card> SQLiteHandler::GetAllCardsByDeck(int deck_id) const {
+std::vector<Card> SQLiteHandler::GetAllCardsByDeckId(int deck_id) const {
   std::vector<Card> cards{};
 
   SQLite::Statement query(db_, "SELECT * FROM cards WHERE deck_id = ?");
@@ -71,6 +71,35 @@ std::vector<Card> SQLiteHandler::GetAllCardsByDeck(int deck_id) const {
   std::cout << "sizeof cards=" << cards.size() << "\n";
 
   return cards;
+}
+
+std::optional<Card> SQLiteHandler::GetCardById(int card_id) const {
+  SQLite::Statement query(db_, "SELECT * FROM cards WHERE id = ?");
+  query.bind(1, card_id);
+
+  while (query.executeStep()) {
+    int id = query.getColumn(0);
+    const char* name = query.getColumn(1);
+    const char* front = query.getColumn(2);
+    const char* back = query.getColumn(3);
+    int deck_id = query.getColumn(4);
+
+    return Card{name, front, back, id, deck_id};
+  }
+
+  return std::nullopt;
+}
+
+bool SQLiteHandler::EditCard(int card_id, Card& card) {
+  SQLite::Statement query(db_,
+                          "UPDATE cards SET front = ?, back = ? WHERE id = ?");
+  query.bind(1, card.front);
+  query.bind(2, card.back);
+  query.bind(3, card.id);
+
+  auto ret = query.exec();
+
+  return (ret) ? true : false;
 }
 
 std::vector<Deck> SQLiteHandler::GetAllDecks(void) const {

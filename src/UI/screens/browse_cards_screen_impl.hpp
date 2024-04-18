@@ -10,9 +10,15 @@
 
 class BrowseCardsScreenImpl : public BrowseCardsScreen {
  public:
-  BrowseCardsScreenImpl();
+  using NotifyEditingCardStartedCb = std::function<void(int card_id)>;
 
-  void SetCallbacks(GetAllCardsCb get_all_cards_cb);
+  BrowseCardsScreenImpl();
+  ~BrowseCardsScreenImpl() {
+    std::cout << "destructor of BrowseCardsScreenImpl\n";
+  }
+
+  void SetCallbacks(GetAllCardsCb get_all_cards_cb,
+                    NotifyEditingCardStartedCb notify_editing_card_started_cb);
 
   void Show(int deck_id);
 
@@ -20,11 +26,14 @@ class BrowseCardsScreenImpl : public BrowseCardsScreen {
   void OnBrowseCardsShowClicked(wxCommandEvent& event) override;
   void OnBrowseCardsEditClicked(wxCommandEvent& event) override;
   void OnBrowseCardsDeleteClicked(wxCommandEvent& event) override;
-  void OnWindowSizeChanged(wxSizeEvent& event) override;
+  void OnCardSelected(wxListEvent& event) override;
 
   void ResizeList(void);
 
   GetAllCardsCb get_all_cards_cb_;
+  NotifyEditingCardStartedCb notify_editing_card_started_cb_;
+  int current_selected_card_idx_;
+  std::vector<std::pair<int, Card>> listed_cards_;
 };
 
 #endif

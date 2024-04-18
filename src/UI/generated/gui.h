@@ -126,9 +126,7 @@ class BrowseCardsScreen : public wxFrame
 		wxButton* BrowseCardsDeleteBtn;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void OnWindowSizeChanged( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnCardSelected( wxListEvent& event ) { event.Skip(); }
-		virtual void OnListSizeChanged( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnBrowseCardsShowClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBrowseCardsEditClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBrowseCardsDeleteClicked( wxCommandEvent& event ) { event.Skip(); }

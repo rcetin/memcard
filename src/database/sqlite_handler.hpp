@@ -44,9 +44,13 @@ class SQLiteHandler : public IDatabaseHandler {
   /// @brief: Gets all cards from a deck
   /// @param deck: Deck to get the cards from
   /// @return vector of cards of the deck
-  std::vector<Card> GetAllCardsByDeck(int deck_id) const override;
+  std::vector<Card> GetAllCardsByDeckId(int deck_id) const override;
+
+  std::optional<Card> GetCardById(int card_id) const override;
 
   std::vector<Deck> GetAllDecks(void) const override;
+
+  bool EditCard(int card_id, Card& card) override;
 
   virtual ~SQLiteHandler() = default;
 

@@ -1,5 +1,5 @@
 
-project('unit-test', 'cpp')
+project('unit-test', 'cpp',default_options: ['cpp_std=c++17'])
 
 common_test_deps = dependency('gtest', main : true, required : true)
 

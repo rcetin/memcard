@@ -229,9 +229,7 @@ BrowseCardsScreen::BrowseCardsScreen( wxWindow* parent, wxWindowID id, const wxS
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	this->Connect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnWindowSizeChanged ) );
 	browseCardsListCtrlr->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( BrowseCardsScreen::OnCardSelected ), NULL, this );
-	browseCardsListCtrlr->Connect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnListSizeChanged ), NULL, this );
 	BrowseCardsShowBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowClicked ), NULL, this );
 	BrowseCardsEditBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsEditClicked ), NULL, this );
 	BrowseCardsDeleteBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsDeleteClicked ), NULL, this );
@@ -240,9 +238,7 @@ BrowseCardsScreen::BrowseCardsScreen( wxWindow* parent, wxWindowID id, const wxS
 BrowseCardsScreen::~BrowseCardsScreen()
 {
 	// Disconnect Events
-	this->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnWindowSizeChanged ) );
 	browseCardsListCtrlr->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( BrowseCardsScreen::OnCardSelected ), NULL, this );
-	browseCardsListCtrlr->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BrowseCardsScreen::OnListSizeChanged ), NULL, this );
 	BrowseCardsShowBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowClicked ), NULL, this );
 	BrowseCardsEditBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsEditClicked ), NULL, this );
 	BrowseCardsDeleteBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsDeleteClicked ), NULL, this );

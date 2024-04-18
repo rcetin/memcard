@@ -22,7 +22,10 @@ GUIManager::GUIManager(MainScreenImpl* main_screen,
       std::bind(&GUIManager::GetAllDecks, this),
       std::bind(&GUIManager::PracticeIsStarted, this, std::placeholders::_1),
       std::bind(&GUIManager::PracticeIsEnded, this, std::placeholders::_1),
-      std::bind(&GUIManager::GetCard, this));
+      std::bind(&GUIManager::GetCard, this),
+      std::bind(&GUIManager::GetCardById, this, std::placeholders::_1),
+      std::bind(&GUIManager::EditCard, this, std::placeholders::_1,
+                std::placeholders::_2));
 }
 
 void GUIManager::CreateNewDeck(Deck& deck) {
@@ -49,7 +52,7 @@ std::vector<Card> GUIManager::GetAllCards(int deck_id) const {
     std::vector<Card>();
   }
 
-  auto cards = database_handler_->GetAllCardsByDeck(deck_id);
+  auto cards = database_handler_->GetAllCardsByDeckId(deck_id);
   return cards;
 }
 
@@ -69,6 +72,14 @@ void GUIManager::PracticeIsEnded(int deck_id) const {
 
 std::optional<Card> GUIManager::GetCard(void) const {
   return session_manager_->GetCard();
+}
+
+std::optional<Card> GUIManager::GetCardById(int card_id) const {
+  return database_handler_->GetCardById(card_id);
+}
+
+void GUIManager::EditCard(int card_id, Card card) const {
+  database_handler_->EditCard(card_id, card);
 }
 
 void GUIManager::StartApplication() const { main_screen_->Show(); }
