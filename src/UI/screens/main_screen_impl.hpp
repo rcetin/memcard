@@ -56,6 +56,7 @@ class MainScreenImpl : public MainScreen {
   void OnAddCardRequestReceived(int deck_id) const;
   void OnNoCardsToShowRequestReceived(int deck_id) const;
   void OnEditingCardStarted(int card_id) const;
+  void OnAddEditingCompleted(const Card& card) const;
 
   int current_deck_id_;
 };

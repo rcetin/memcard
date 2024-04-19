@@ -12,14 +12,17 @@ AddEditCardScreenImpl::AddEditCardScreenImpl()
       create_new_card_cb_(nullptr),
       get_card_by_id_cb_(nullptr),
       edit_card_cb_(nullptr),
+      notify_add_edit_completed_cb_(nullptr),
       current_deck_id_{-1} {}
 
-void AddEditCardScreenImpl::SetCallbacks(CreateNewCardCb create_new_card_cb,
-                                         GetCardByIdCb get_card_by_id_cb,
-                                         EditCardCb edit_card_cb) {
+void AddEditCardScreenImpl::SetCallbacks(
+    CreateNewCardCb create_new_card_cb, GetCardByIdCb get_card_by_id_cb,
+    EditCardCb edit_card_cb,
+    NotifyAddEditCompleted notify_add_edit_completed_cb) {
   create_new_card_cb_ = create_new_card_cb;
   get_card_by_id_cb_ = get_card_by_id_cb;
   edit_card_cb_ = edit_card_cb;
+  notify_add_edit_completed_cb_ = notify_add_edit_completed_cb;
 }
 
 void AddEditCardScreenImpl::Show() { AddEditCardScreen::Show(true); }
@@ -70,6 +73,7 @@ void AddEditCardScreenImpl::OnAddEditCardSaveClicked(wxCommandEvent& event) {
     m.ShowInfo("Card is edited successfully");
 
     Hide();
+    notify_add_edit_completed_cb_(current_edited_card_);
 
     return;
   }

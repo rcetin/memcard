@@ -27,6 +27,7 @@ void BrowseCardsScreenImpl::Show(int deck_id) {
             << "number of cards from deck id=" << deck_id << "\n";
 
   auto idx = 0;
+  browseCardsListCtrlr->DeleteAllItems();
   for (auto& card : cards) {
     std::cout << card.front << " " << card.back << "\n";
 
@@ -48,11 +49,8 @@ void BrowseCardsScreenImpl::SetCallbacks(
   notify_editing_card_started_cb_ = notify_editing_card_started_cb;
 }
 
-void BrowseCardsScreenImpl::OnBrowseCardsShowClicked(wxCommandEvent& event) {
-  ///
-}
-
-void BrowseCardsScreenImpl::OnBrowseCardsEditClicked(wxCommandEvent& event) {
+void BrowseCardsScreenImpl::OnBrowseCardsShowEditClicked(
+    wxCommandEvent& event) {
   const auto res =
       std::find_if(listed_cards_.begin(), listed_cards_.end(),
                    [this](const auto& card_pair) {

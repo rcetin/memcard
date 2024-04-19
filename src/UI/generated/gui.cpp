@@ -210,11 +210,8 @@ BrowseCardsScreen::BrowseCardsScreen( wxWindow* parent, wxWindowID id, const wxS
 	wxBoxSizer* bSizer31;
 	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
 
-	BrowseCardsShowBtn = new wxButton( this, wxID_ANY, wxT("Show"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer31->Add( BrowseCardsShowBtn, 0, wxALL, 5 );
-
-	BrowseCardsEditBtn = new wxButton( this, wxID_ANY, wxT("Edit"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer31->Add( BrowseCardsEditBtn, 0, wxALL, 5 );
+	BrowseCardsShowEditBtn = new wxButton( this, wxID_ANY, wxT("Show/Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( BrowseCardsShowEditBtn, 0, wxALL, 5 );
 
 	BrowseCardsDeleteBtn = new wxButton( this, wxID_ANY, wxT("Delete"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer31->Add( BrowseCardsDeleteBtn, 0, wxALL, 5 );
@@ -230,8 +227,7 @@ BrowseCardsScreen::BrowseCardsScreen( wxWindow* parent, wxWindowID id, const wxS
 
 	// Connect Events
 	browseCardsListCtrlr->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( BrowseCardsScreen::OnCardSelected ), NULL, this );
-	BrowseCardsShowBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowClicked ), NULL, this );
-	BrowseCardsEditBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsEditClicked ), NULL, this );
+	BrowseCardsShowEditBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowEditClicked ), NULL, this );
 	BrowseCardsDeleteBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsDeleteClicked ), NULL, this );
 }
 
@@ -239,8 +235,7 @@ BrowseCardsScreen::~BrowseCardsScreen()
 {
 	// Disconnect Events
 	browseCardsListCtrlr->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( BrowseCardsScreen::OnCardSelected ), NULL, this );
-	BrowseCardsShowBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowClicked ), NULL, this );
-	BrowseCardsEditBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsEditClicked ), NULL, this );
+	BrowseCardsShowEditBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsShowEditClicked ), NULL, this );
 	BrowseCardsDeleteBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BrowseCardsScreen::OnBrowseCardsDeleteClicked ), NULL, this );
 
 }

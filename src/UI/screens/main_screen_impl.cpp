@@ -57,8 +57,10 @@ void MainScreenImpl::SetCallbacks(
   add_card_boarding_screen_->SetCallbacks(std::bind(
       &MainScreenImpl::OnAddCardRequestReceived, this, std::placeholders::_1));
 
-  add_edit_card_screen_->SetCallbacks(create_new_card_cb, get_card_by_id_cb,
-                                      edit_card_cb);
+  add_edit_card_screen_->SetCallbacks(
+      create_new_card_cb, get_card_by_id_cb, edit_card_cb,
+      std::bind(&MainScreenImpl::OnAddEditingCompleted, this,
+                std::placeholders::_1));
 
   create_new_deck_cb_ = create_new_deck_cb;
   create_new_card_cb_ = create_new_card_cb;
@@ -102,8 +104,12 @@ void MainScreenImpl::OnNoCardsToShowRequestReceived(int deck_id) const {
 
 void MainScreenImpl::OnEditingCardStarted(int card_id) const {
   std::cout << "Editing started for card id=" << card_id << "\n";
-  browse_cards_screen_->Hide();
+  // browse_cards_screen_->Hide();
   add_edit_card_screen_->Show(AddEditCardScreenImpl::Operation::kEdit, card_id);
+}
+
+void MainScreenImpl::OnAddEditingCompleted(const Card& card) const {
+  browse_cards_screen_->Show(card.deck_id);
 }
 
 void MainScreenImpl::onCreateDeckClicked(wxCommandEvent& event) {

@@ -23,8 +23,7 @@ class BrowseCardsScreenImpl : public BrowseCardsScreen {
   void Show(int deck_id);
 
  private:
-  void OnBrowseCardsShowClicked(wxCommandEvent& event) override;
-  void OnBrowseCardsEditClicked(wxCommandEvent& event) override;
+  void OnBrowseCardsShowEditClicked(wxCommandEvent& event) override;
   void OnBrowseCardsDeleteClicked(wxCommandEvent& event) override;
   void OnCardSelected(wxListEvent& event) override;
 

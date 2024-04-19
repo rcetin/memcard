@@ -6,11 +6,14 @@
 
 class AddEditCardScreenImpl : public AddEditCardScreen {
  public:
+  using NotifyAddEditCompleted = std::function<void(const Card&)>;
+
   enum class Operation { kAdd, kEdit };
 
   AddEditCardScreenImpl();
 
-  void SetCallbacks(CreateNewCardCb, GetCardByIdCb, EditCardCb);
+  void SetCallbacks(CreateNewCardCb, GetCardByIdCb, EditCardCb,
+                    NotifyAddEditCompleted);
   void Show();
   void Show(Operation, int id);
 
@@ -24,11 +27,12 @@ class AddEditCardScreenImpl : public AddEditCardScreen {
   static constexpr const char* add_operation_title = "Add Card";
   static constexpr const char* edit_operation_title = "Edit Card";
   static constexpr const char* add_button_title = "Add";
-  static constexpr const char* edit_button_title = "Edit";
+  static constexpr const char* edit_button_title = "Save";
 
   CreateNewCardCb create_new_card_cb_;
   GetCardByIdCb get_card_by_id_cb_;
   EditCardCb edit_card_cb_;
+  NotifyAddEditCompleted notify_add_edit_completed_cb_;
   int current_deck_id_;
   int current_edited_card_id_;
   Card current_edited_card_;
