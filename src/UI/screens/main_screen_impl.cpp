@@ -104,7 +104,6 @@ void MainScreenImpl::OnNoCardsToShowRequestReceived(int deck_id) const {
 
 void MainScreenImpl::OnEditingCardStarted(int card_id) const {
   std::cout << "Editing started for card id=" << card_id << "\n";
-  // browse_cards_screen_->Hide();
   add_edit_card_screen_->Show(AddEditCardScreenImpl::Operation::kEdit, card_id);
 }
 
